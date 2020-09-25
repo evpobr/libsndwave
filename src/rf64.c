@@ -396,6 +396,7 @@ rf64_read_header (SF_PRIVATE *psf, int *blockalign, int *framesperblock)
 					} ;
 				break ;
 
+			case iXML_MARKER :
 			case JUNK_MARKER :
 			case PAD_MARKER :
 				psf_log_printf (psf, "%M : %d\n", marker, chunk_size) ;
