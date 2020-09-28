@@ -152,16 +152,16 @@ jobs:
         if: startsWith(matrix.os,'macos')
         run: |
           brew update
-          brew install libogg libvorbis flac opus sqlite3 speex
+          brew install libogg libvorbis flac opus speex
 
       - name: Install Lunux dependencies
         if: startsWith(matrix.os,'ubuntu')
-        run: sudo apt-get install -y ninja-build libogg-dev libvorbis-dev libflac-dev libopus-dev libasound2-dev libsqlite3-dev libspeex-dev
+        run: sudo apt-get install -y ninja-build libogg-dev libvorbis-dev libflac-dev libopus-dev libasound2-dev libspeex-dev
 
       - name: Install Windows dependencies
         if: startsWith(matrix.os,'windows')
         run: |
-          vcpkg install libvorbis libflac opus sqlite3 speex --triplet ${{matrix.triplet}}
+          vcpkg install libvorbis libflac opus speex --triplet ${{matrix.triplet}}
 
       - name: Configure, build and test with CMake
         env:
