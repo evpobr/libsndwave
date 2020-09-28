@@ -141,7 +141,7 @@ feature_summary (WHAT ALL)
 
 configure_file (src/config.h.cmake src/config.h)
 
-configure_file (include/sndwave.h.in include/sndwave.h)
+configure_file (include/sndwave_types.h.in include/sndwave_types.h)
 
 if (INSTALL_PKGCONFIG_MODULE)
 
@@ -167,8 +167,9 @@ endif ()
 
 # Public libsndwave headers
 set (sndwave_HDRS
+	include/sndwave.h
 	include/sndwave.hh
-	${CMAKE_CURRENT_BINARY_DIR}/include/sndwave.h
+	${CMAKE_CURRENT_BINARY_DIR}/include/sndwave_types.h
 	)
 
 add_library (sndwave

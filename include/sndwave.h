@@ -1,5 +1,6 @@
 /*
 ** Copyright (C) 1999-2016 Erik de Castro Lopo <erikd@mega-nerd.com>
+** Copyright (C) 2020 evpobr <evpobr@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU Lesser General Public License as published by
@@ -25,6 +26,8 @@
 
 /* This is the version 1.0.X header file. */
 #define	SNDFILE_1
+
+#include "sndwave_types.h"
 
 #include <stdio.h>
 #include <stdint.h>
@@ -334,18 +337,6 @@ enum
 /* A SNDFILE* pointer can be passed around much like stdio.h's FILE* pointer. */
 
 typedef	struct SNDFILE_tag	SNDFILE ;
-
-/* The following typedef is system specific and is defined when libsndfile is
-** compiled. sf_count_t will be a 64 bit value when the underlying OS allows
-** 64 bit file offsets.
-** On windows, we need to allow the same header file to be compiler by both GCC
-** and the Microsoft compiler.
-*/
-
-typedef @TYPEOF_SF_COUNT_T@	sf_count_t ;
-#ifndef SF_COUNT_MAX
-#define SF_COUNT_MAX		@SF_COUNT_MAX@
-#endif
 
 
 /* A pointer to a SF_INFO structure is passed to sf_open () and filled in.
