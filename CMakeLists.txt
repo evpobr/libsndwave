@@ -55,7 +55,6 @@ option (BUILD_PROGRAMS "Build programs" ON)
 option (BUILD_EXAMPLES "Build examples" ON)
 option (ENABLE_CPACK "Enable CPack support" ON)
 option (ENABLE_EXPERIMENTAL "Enable experimental code" OFF)
-option (ENABLE_BOW_DOCS "Enable black-on-white html docs" OFF)
 if (MSVC AND (CMAKE_VERSION VERSION_LESS 3.15))
 	option (ENABLE_STATIC_RUNTIME "Enable static runtime" OFF)
 endif ()
@@ -71,18 +70,15 @@ list (APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(SndFileChecks)
 
 
-cmake_dependent_option (BUILD_REGTEST "Build regtest" ON "SQLITE3_FOUND" OFF)
 cmake_dependent_option (ENABLE_EXTERNAL_LIBS "Enable FLAC, Vorbis, and Opus codecs" ON "Vorbis_FOUND;FLAC_FOUND;OPUS_FOUND" OFF)
 cmake_dependent_option (ENABLE_CPU_CLIP "Enable tricky cpu specific clipper" ON "CPU_CLIPS_POSITIVE;CPU_CLIPS_NEGATIVE" OFF)
 if (NOT ENABLE_CPU_CLIP)
 	set (CPU_CLIPS_POSITIVE FALSE)
 	set (CPU_CLIPS_NEGATIVE FALSE)
 endif ()
-cmake_dependent_option (ENABLE_COMPATIBLE_LIBSNDFILE_NAME "Set DLL name to libsndfile-1.dll (canonical name), sndfile.dll otherwise" OFF "WIN32;BUILD_SHARED_LIBS" OFF)
 cmake_dependent_option (INSTALL_MANPAGES "Install man pages for programs" ON "BUILD_PROGRAMS AND (UNIX OR MINGW OR CYGWIN)" OFF)
 
 set (HAVE_EXTERNAL_XIPH_LIBS ${ENABLE_EXTERNAL_LIBS})
-set (HAVE_SQLITE3 ${BUILD_REGTEST})
 set (HAVE_ALSA_ASOUNDLIB_H ${ALSA_FOUND})
 set (HAVE_SNDIO_H ${SNDIO_FOUND})
 
@@ -94,16 +90,11 @@ add_feature_info (BUILD_SHARED_LIBS BUILD_SHARED_LIBS "build shared libraries")
 add_feature_info (ENABLE_EXTERNAL_LIBS ENABLE_EXTERNAL_LIBS "enable FLAC, Vorbis, and Opus codecs")
 add_feature_info (ENABLE_EXPERIMENTAL ENABLE_EXPERIMENTAL "enable experimental code")
 add_feature_info (BUILD_TESTING BUILD_TESTING "build tests")
-add_feature_info (BUILD_REGTEST BUILD_REGTEST "build regtest")
 add_feature_info (ENABLE_CPACK ENABLE_CPACK "enable CPack support")
 add_feature_info (ENABLE_CPU_CLIP ENABLE_CPU_CLIP "Enable tricky cpu specific clipper")
-add_feature_info (ENABLE_BOW_DOCS ENABLE_BOW_DOCS "enable black-on-white html docs")
 add_feature_info (ENABLE_PACKAGE_CONFIG ENABLE_PACKAGE_CONFIG "generate and install package config file")
 add_feature_info (INSTALL_PKGCONFIG_MODULE INSTALL_PKGCONFIG_MODULE "generate and install pkg-config module")
 add_feature_info (INSTALL_MANPAGES INSTALL_MANPAGES "install man pages for programs")
-if (WIN32 AND BUILD_SHARED_LIBS)
-	add_feature_info (ENABLE_COMPATIBLE_LIBSNDFILE_NAME ENABLE_COMPATIBLE_LIBSNDFILE_NAME "Set DLL name to libsndfile-1.dll (canonical name), sndfile.dll otherwise")
-endif ()
 
 if (MSVC AND (CMAKE_VERSION VERSION_LESS 3.15))
 	add_feature_info (ENABLE_STATIC_RUNTIME ENABLE_STATIC_RUNTIME "Enable static runtime")
@@ -137,12 +128,6 @@ set_package_properties(Speex PROPERTIES TYPE OPTIONAL
 	URL "www.speex.org/"
 	DESCRIPTION "an audio codec tuned for speech"
 	PURPOSE "Enables experemental Speex support"
-	)
-set_package_properties (SQLite3 PROPERTIES
-	TYPE OPTIONAL
-	URL "www.sqlite.org/"
-	DESCRIPTION "light weight SQL database engine."
-	PURPOSE "Enables regtest"
 	)
 if (BUILD_SHARED_LIBS)
 	set_package_properties (PythonInterp PROPERTIES
@@ -335,16 +320,10 @@ set_target_properties (sndfile PROPERTIES
 	PUBLIC_HEADER "${sndfile_HDRS}"
 	)
 
-if (ENABLE_COMPATIBLE_LIBSNDFILE_NAME)
-	if (MINGW OR CYGWIN)
-		set_target_properties (sndfile PROPERTIES
-			RUNTIME_OUTPUT_NAME "sndfile-1"
-			)
-	else ()
-		set_target_properties (sndfile PROPERTIES
-			RUNTIME_OUTPUT_NAME "libsndfile-1"
-			)
-	endif ()
+if (MINGW OR CYGWIN)
+	set_target_properties (sndfile PROPERTIES
+		RUNTIME_OUTPUT_NAME "sndfile-1"
+		)
 endif ()
 
 if (BUILD_SHARED_LIBS)
@@ -647,32 +626,6 @@ if (BUILD_EXAMPLES)
 endif ()
 
 #
-# sndfile-regtest
-#
-
-if (BUILD_REGTEST)
-
-	add_executable (sndfile-regtest
-		regtest/sndfile-regtest.c
-		regtest/database.c
-		regtest/checksum.c
-		)
-	target_include_directories (sndfile-regtest
-		PUBLIC
-			src
-			${CMAKE_CURRENT_BINARY_DIR}/src
-			${CMAKE_CURRENT_BINARY_DIR}/tests
-		)
-	target_link_libraries(sndfile-regtest
-		PRIVATE
-			sndfile
-			SQLite3::SQLite3
-			$<$<BOOL:${LIBM_REQUIRED}>:m>
-		)
-
-endif ()
-
-#
 # Installation
 #
 
@@ -748,34 +701,6 @@ if (INSTALL_MANPAGES)
 	install (FILES man/sndfile-metadata-get.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 RENAME sndfile-metadata-set.1)
 	install (FILES man/sndfile-interleave.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 RENAME sndfile-deinterleave.1)
 endif ()
-
-if (ENABLE_BOW_DOCS)
-	set (HTML_BGCOLOUR "white")
-	set (HTML_FGCOLOUR "black")
-else ()
-	set (HTML_BGCOLOUR "black")
-	set (HTML_FGCOLOUR "white")
-endif ()
-configure_file (doc/libsndfile.css.in doc/libsndfile.css)
-set (html_DATA
-	doc/index.html
-	doc/libsndfile.jpg
-	"${CMAKE_CURRENT_BINARY_DIR}/doc/libsndfile.css"
-	doc/print.css
-	doc/api.html
-	doc/command.html
-	doc/bugs.html
-	doc/formats.html
-	doc/sndfile_info.html
-	doc/new_file_type.HOWTO
-	doc/win32.html
-	doc/FAQ.html
-	doc/lists.html
-	doc/embedded_files.html
-	doc/octave.html
-	doc/tutorial.html
-	)
-install (FILES ${html_DATA} DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
 if (INSTALL_PKGCONFIG_MODULE)
 	install (FILES ${CMAKE_CURRENT_BINARY_DIR}/sndfile.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)

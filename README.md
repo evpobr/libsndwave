@@ -128,17 +128,6 @@ You can pass additional options with `/D<parameter>=<value>` when you run
   **Note**: For MSVC compiler this option is deprecated and disabled for CMake >= 3.15, see
   policy [CMP0091](https://cmake.org/cmake/help/latest/policy/CMP0091.html).
   Use `CMAKE_MSVC_RUNTIME_LIBRARY` option instead.
-* `ENABLE_COMPATIBLE_LIBSNDFILE_NAME` - set DLL name to `libsndfile-1.dll`
-  (canonical name) on Windows platform, `sndfile.dll` otherwise, `OFF` by
-  default. Library name can be different depending on platform. The well known
-  DLL name on Windows platform is `libsndfile-1.dll`, because the only way to
-  build Windows library before was MinGW toolchain with Autotools. This name
-  is native for MinGW ecosystem, Autotools constructs it using MinGW platform
-  rules from `sndfile` target. But when you build with CMake using native
-  Windows compiler, the name is `sndfile.dll`. This is name for native Windows
-  platform, because Windows has no library naming rules. It is preffered
-  because you can search library using package manager or CMake's
-  `find_library` command on any platform using the same `sndfile` name.
 
 Deprecated options:
 
