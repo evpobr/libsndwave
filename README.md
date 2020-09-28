@@ -2,7 +2,15 @@
 
 ![C/C++ CI](https://github.com/evpobr/libsndwave/workflows/C/C++%20CI/badge.svg)
 
-A library for reading and writing audio files.
+libsndwave is a fork of [libsndfile](https://github.com/erikd/libsndfile),
+a library for reading and writing audio files, developed by Erik de Castro Lopo.
+
+The goal of this project is to speed up development and remove unnecessary and
+outdated dependencies.
+
+This project is API compatible with libsndfile. The name of the library itself and
+the header file has been changed to avoid conflicts with the upstream, but all the
+names of public functions and types remained unchanged.
 
 ## Hacking
 
