@@ -32,6 +32,7 @@ set (CPACK_PACKAGE_VERSION_FULL "${PROJECT_VERSION}${CPACK_PACKAGE_VERSION_STAGE
 # System-wide includes
 #
 
+include (GenerateExportHeader)
 include (GNUInstallDirs)
 include (FeatureSummary)
 include (CMakeDependentOption)
@@ -291,6 +292,20 @@ add_library (sndwave
 
 add_library (SndWave::sndwave ALIAS sndwave)
 
+generate_export_header (sndwave
+	EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/include/sndwave/sndwave_export.h
+	)
+list (APPEND sndwave_HDRS
+	${CMAKE_CURRENT_BINARY_DIR}/include/sndwave/sndwave_export.h
+	)
+target_sources (sndwave
+	PRIVATE
+		${CMAKE_CURRENT_BINARY_DIR}/include/sndwave/sndwave_export.h
+	)
+if (NOT BUILD_SHARED_LIBS)
+	target_compile_definitions (sndwave PUBLIC SNDWAVE_STATIC_DEFINE)
+endif ()
+
 target_include_directories (sndwave
 	PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -336,65 +351,6 @@ if (BUILD_SHARED_LIBS)
 		SOVERSION ${PROJECT_VERSION_MAJOR}
 		VERSION ${PROJECT_VERSION}
 		)
-
-	# Symbol files generation
-
-	if (WIN32)
-		set (SYMBOL_FILENAME "sndfile.def")
-		set (SYMBOL_OS "win32")
-	elseif ((CMAKE_SYSTEM_NAME MATCHES "Darwin") OR (CMAKE_SYSTEM_NAME MATCHES "Rhapsody"))
-		set (SYMBOL_FILENAME "Symbols.darwin")
-		set (SYMBOL_OS "darwin")
-	elseif (CMAKE_SYSTEM_NAME MATCHES "OS2")
-		set (SYMBOL_FILENAME "Symbols.os2")
-		set (SYMBOL_OS "os2")
-	elseif (UNIX)
-		set (SYMBOL_FILENAME "Symbols.gnu-binutils")
-		set (SYMBOL_OS "linux")
-	endif ()
-
-	if (DEFINED SYMBOL_OS)
-		add_custom_command (
-			OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}
-			COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/src/create_symbols_file.py ${SYMBOL_OS} ${PROJECT_VERSION} > ${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}
-			COMMENT "Generating ${SYMBOL_FILENAME}..."
-			)
-
-		add_custom_target (GENFILES DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME})
-		if (SYMBOL_OS MATCHES "win32")
-			target_sources (sndwave
-				PRIVATE
-					${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}
-				)
-		elseif (SYMBOL_OS MATCHES "darwin")
-			add_dependencies (sndwave GENFILES)
-			if (CMAKE_VERSION VERSION_LESS 3.13)
-				set_property (TARGET sndwave APPEND_STRING PROPERTY
-					LINK_FLAGS "-Wl,-exported_symbols_list -Wl,${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}"
-					)
-			else ()
-				target_link_options (sndwave PRIVATE "LINKER:-exported_symbols_list,${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}")
-			endif()
-		elseif (SYMBOL_OS MATCHES "os")
-			add_dependencies (sndwave GENFILES)
-			if (CMAKE_VERSION VERSION_LESS 3.13)
-				set_property (TARGET sndwave APPEND_STRING PROPERTY
-					LINK_FLAGS "-Wl,-export-symbols ${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}"
-					)
-			else ()
-				target_link_options (sndwave PRIVATE "LINKER:-export-symbols ${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}")
-			endif()
-		elseif (UNIX)
-			add_dependencies (sndwave GENFILES)
-			if (CMAKE_VERSION VERSION_LESS 3.13)
-				set_property (TARGET sndwave APPEND_STRING PROPERTY
-					LINK_FLAGS "-Wl,--version-script,${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}"
-					)
-			else ()
-				target_link_options (sndwave PRIVATE "LINKER:--version-script,${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}")
-			endif()
-		endif()
-	endif()
 
 endif ()
 
