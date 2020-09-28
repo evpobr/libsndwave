@@ -1,23 +1,23 @@
-.Dd November 2, 2014
-.Dt SNDFILE-METADATA-GET 1
+.Dd September 28, 2020
+.Dt SNDWAVE-METADATA-GET 1
 .Os
 .Sh NAME
-.Nm sndfile-metadata-get ,
-.Nm sndfile-metadata-set
+.Nm sndwave-metadata-get ,
+.Nm sndwave-metadata-set
 .Nd get or set metadata in a sound file
 .Sh SYNOPSIS
-.Nm sndfile-metadata-get
+.Nm sndwave-metadata-get
 .Op Ar options
 .Ar file
-.Nm sndfile-metadata-set
+.Nm sndwave-metadata-set
 .Op Ar options
 .Ar file
-.Nm sndfile-metadata-set
+.Nm sndwave-metadata-set
 .Op Ar options
 .Ar input
 .Ar output
 .Sh DESCRIPTION
-.Nm sndfile-metadata-get
+.Nm sndwave-metadata-get
 displays bext and string metadata stored in an audio file.
 The following options specify what to print.
 .Pp
@@ -54,7 +54,7 @@ album
 license
 .El
 .Pp
-.Nm sndfile-metadata-set
+.Nm sndwave-metadata-set
 sets bext and string metadata in an audio file if the format supports it.
 If the file does not contain a BEXT chunk to be modified,
 the second synopsis must be used, where another output file
@@ -110,7 +110,7 @@ Set the string date to current.
 .Sh EXIT STATUS
 .Ex -std
 .Sh SEE ALSO
-.Lk http://www.mega-nerd.com/libsndfile/
 .Lk http://tech.ebu.ch/docs/tech/tech3285.pdf
 .Sh AUTHORS
 .An Erik de Castro Lopo Aq Mt erikd@mega-nerd.com
+.An evpobr Aq Mt evpobr@gmail.com

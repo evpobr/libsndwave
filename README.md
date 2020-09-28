@@ -1,20 +1,20 @@
-# libsndfile
+# libsndwave
 
-![C/C++ CI](https://github.com/erikd/libsndfile/workflows/C/C++%20CI/badge.svg)
+![C/C++ CI](https://github.com/evpobr/libsndwave/workflows/C/C++%20CI/badge.svg)
 
-libsndfile is a C library for reading and writing files containing sampled audio
+libsndwave is a C library for reading and writing files containing sampled audio
 data.
 
 ## Hacking
 
-The canonical source code repository for libsndfile is at
-[https://github.com/erikd/libsndfile/][github].
+The canonical source code repository for libsndwave is at
+[https://github.com/evpobr/libsndwave/][github].
 
 You can grab the source code using:
 
-    git clone git://github.com/erikd/libsndfile.git
+    git clone git://github.com/evpobr/libsndwave.git
 
-Setting up a build environment for libsndfile on Debian or Ubuntu is as simple as:
+Setting up a build environment for libsndwave on Debian or Ubuntu is as simple as:
 
     sudo apt install build-essential cmake libasound2-dev libflac-dev libogg-dev \
         libvorbis-dev libopus-dev pkg-config python
@@ -43,11 +43,11 @@ Some IDE support CMake natively or with plugins, check you IDE documentation
    Studio 2015)
 2. CMake 3.1.3 or newer
 
-There are some recommended packages to enable all features of libsndfile:
+There are some recommended packages to enable all features of libsndwave:
 
 1. Ogg, Vorbis and FLAC libraries and headers to enable these formats support
-2. ALSA development package under Linux to build sndfile-play utility
-3. Sndio development package under BSD to build sndfile-play utility
+2. ALSA development package under Linux to build sndwave-play utility
+3. Sndio development package under BSD to build sndwave-play utility
 
 ### Building from command line
 
@@ -98,11 +98,11 @@ You can pass additional options with `/D<parameter>=<value>` when you run
 * `CMAKE_INSTALL_PREFIX` - build install location, the same as `--prefix` option
   of `configure` script
 
- Useful libsndfile options:
+ Useful libsndwave options:
 
 * `BUILD_SHARED_LIBS` - build shared library (DLL under Windows) when `ON`,
   build static library othervise. This option is `OFF` by default.
-* `BUILD_PROGRAMS` - build libsndfile's utilities from `programs/` directory,
+* `BUILD_PROGRAMS` - build libsndwave's utilities from `programs/` directory,
   `ON` by default.
 * `BUILD_EXAMPLES` - build examples, `ON` by default.
 * `BUILD_TESTING` - build tests. Then you can run tests with `ctest` command,
@@ -147,32 +147,32 @@ First you need to add `FindOgg.cmake`, `FindVorbis.cmake`, `FindFLAC.cmake` and
     
     list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-Now you can search `libsndfile` library from your `CMakeLists.txt`
+Now you can search `libsndwave` library from your `CMakeLists.txt`
  with this command:
 
-    find_package(SndFile)
+    find_package(SndWave)
 
-`SndFile_FOUND` is set to `ON` when library is found.
+`SndWave_FOUND` is set to `ON` when library is found.
 
-If `libsndfile` dependency is critical, you can add `REQUIRED` to
+If `libsndwave` dependency is critical, you can add `REQUIRED` to
  `find_package`:
 
-    find_package(SndFile REQUIRED)
+    find_package(SndWave REQUIRED)
 
 With with option `find_package` will terminate configuration process
- if `libsndfile` is not found.
+ if `libsndwave` is not found.
 
 You can also add version check:
 
-    find_package(SndFile 1.0.29)
+    find_package(SndWave 1.0.29)
 
-`find_package` will report error, if `libsndfile` version is < 1.0.29.
+`find_package` will report error, if `libsndwave` version is < 1.0.29.
 
 You can combine `REQUIRED` and version if you need.
 
-To link `libsndfile` library use:
+To link `libsndwave` library use:
 
-    target_link_libraries(my_application PRIVATE SndFile::sndfile)
+    target_link_libraries(my_application PRIVATE SndWave::sndwave)
 
 ### Notes for Windows users
 
@@ -201,5 +201,4 @@ You also need to set `VCPKG_TARGET_TRIPLET` because you use static libraries:
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 [brew]: http://brew.sh/
-[github]: https://github.com/erikd/libsndfile/
-[BuildingForAndroid]: https://github.com/erikd/libsndfile/blob/master/Building-for-Android.md
+[github]: https://github.com/evpobr/libsndwave/

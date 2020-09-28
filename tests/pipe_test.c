@@ -46,7 +46,7 @@ main (void)
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-#include <sndfile.h>
+#include <sndwave.h>
 
 #include "utils.h"
 

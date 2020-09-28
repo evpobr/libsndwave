@@ -21,7 +21,7 @@
 #include	<math.h>
 #include	<limits.h>
 
-#include	"sndfile.h"
+#include	"sndwave.h"
 #include	"common.h"
 
 static sf_count_t ulaw_read_ulaw2s (SF_PRIVATE *psf, short *ptr, sf_count_t len) ;

@@ -19,7 +19,7 @@
 #include	<cstdio>
 #include	<cstring>
 
-#include	<sndfile.hh>
+#include	<sndwave.hh>
 
 #define		BUFFER_LEN		1024
 

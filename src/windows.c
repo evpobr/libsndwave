@@ -28,7 +28,7 @@
 #include <windows.h>
 
 #define ENABLE_SNDFILE_WINDOWS_PROTOTYPES 1
-#include "sndfile.h"
+#include "sndwave.h"
 #include "common.h"
 
 extern int sf_errno ;

@@ -25,7 +25,7 @@
 #include <ctype.h>
 #include <math.h>
 
-#include "sndfile.h"
+#include "sndwave.h"
 #include "sfendian.h"
 #include "common.h"
 

@@ -22,7 +22,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <sndfile.hh>
+#include <sndwave.hh>
 
 #include "utils.h"
 

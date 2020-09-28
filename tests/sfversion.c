@@ -23,7 +23,7 @@
 #include <string.h>
 #include <stdint.h>
 
-#include <sndfile.h>
+#include <sndwave.h>
 
 #define	BUFFER_SIZE	(256)
 

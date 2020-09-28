@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "sndfile.h"
+#include "sndwave.h"
 #include "sfendian.h"
 #include "common.h"
 

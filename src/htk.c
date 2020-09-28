@@ -23,7 +23,7 @@
 #include	<string.h>
 #include	<ctype.h>
 
-#include	"sndfile.h"
+#include	"sndwave.h"
 #include	"sfendian.h"
 #include	"common.h"
 

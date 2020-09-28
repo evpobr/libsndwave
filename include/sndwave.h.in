@@ -17,10 +17,7 @@
 */
 
 /*
-** sndfile.h -- system-wide definitions
-**
-** API documentation is in the doc/ directory of the source code tarball
-** and at http://www.mega-nerd.com/libsndfile/api.html.
+** sndwave.h -- system-wide definitions
 */
 
 #ifndef SNDFILE_H
@@ -760,7 +757,7 @@ void	sf_write_sync	(SNDFILE *sndfile) ;
 **
 **		#include <windows.h>
 **		#define ENABLE_SNDFILE_WINDOWS_PROTOTYPES 1
-**		#including <sndfile.h>
+**		#including <sndwave.h>
 */
 
 #if (defined (ENABLE_SNDFILE_WINDOWS_PROTOTYPES) && ENABLE_SNDFILE_WINDOWS_PROTOTYPES)

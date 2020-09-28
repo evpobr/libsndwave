@@ -39,7 +39,7 @@
 #include <ctype.h>
 #include <time.h>
 
-#include <sndfile.h>
+#include <sndwave.h>
 
 #include "common.h"
 

@@ -155,7 +155,7 @@
 #include "sf_unistd.h"
 #endif
 
-#include "sndfile.h"
+#include "sndwave.h"
 #include "sfendian.h"
 #include "common.h"
 

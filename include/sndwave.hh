@@ -32,27 +32,24 @@
 
 /*
 ** The above modified BSD style license (GPL and LGPL compatible) applies to
-** this file. It does not apply to libsndfile itself which is released under
-** the GNU LGPL or the libsndfile test suite which is released under the GNU
+** this file. It does not apply to libsndwave itself which is released under
+** the GNU LGPL or the libsndwave test suite which is released under the GNU
 ** GPL.
 ** This means that this header file can be used under this modified BSD style
-** license, but the LGPL still holds for the libsndfile library itself.
+** license, but the LGPL still holds for the libsndwave library itself.
 */
 
 /*
-** sndfile.hh -- A lightweight C++ wrapper for the libsndfile API.
+** sndwave.hh -- A lightweight C++ wrapper for the libsndwave API.
 **
 ** All the methods are inlines and all functionality is contained in this
 ** file. There is no separate implementation file.
-**
-** API documentation is in the doc/ directory of the source code tarball
-** and at http://www.mega-nerd.com/libsndfile/api.html.
 */
 
-#ifndef SNDFILE_HH
-#define SNDFILE_HH
+#ifndef SNDWAVE_HH
+#define SNDWAVE_HH
 
-#include <sndfile.h>
+#include <sndwave.h>
 
 #include <string>
 #include <new> // for std::nothrow

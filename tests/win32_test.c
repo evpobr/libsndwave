@@ -17,7 +17,7 @@
 */
 
 #include "sfconfig.h"
-#include "sndfile.h"
+#include "sndwave.h"
 
 #include <stdio.h>
 #include <stdlib.h>

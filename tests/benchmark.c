@@ -35,7 +35,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#include <sndfile.h>
+#include <sndwave.h>
 
 #ifndef		M_PI
 #define		M_PI		3.14159265358979323846264338

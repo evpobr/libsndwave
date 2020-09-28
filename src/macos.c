@@ -22,7 +22,7 @@
 #include	<string.h>
 #include	<sys/stat.h>
 
-#include	"sndfile.h"
+#include	"sndwave.h"
 #include	"sfendian.h"
 #include	"common.h"
 

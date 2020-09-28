@@ -20,7 +20,7 @@
 
 #include	<stdlib.h>
 
-#include	"sndfile.h"
+#include	"sndwave.h"
 #include	"common.h"
 
 #define		INTERLEAVE_CHANNELS		6

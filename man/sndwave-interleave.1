@@ -1,20 +1,20 @@
-.Dd November 2, 2014
-.Dt SNDFILE-INTERLEAVE 1
+.Dd September 28, 2020
+.Dt SNDWAVE-INTERLEAVE 1
 .Os
 .Sh NAME
-.Nm sndfile-interleave ,
-.Nm sndfile-deinterleave
+.Nm sndwave-interleave ,
+.Nm sndwave-deinterleave
 .Nd convert mono files into a multi-channel file and vice versa
 .Sh SYNOPSIS
-.Nm sndfile-interleave
+.Nm sndwave-interleave
 .Ar input1
 .Ar input2
 .Ar ...
 .Fl o Ar output
-.Nm sndfile-deinterleave
+.Nm sndwave-deinterleave
 .Ar file
 .Sh DESCRIPTION
-.Nm sndfile-interleave
+.Nm sndwave-interleave
 creates a multi-channel file taking audio data
 from two or more mono files as individual channels.
 The format of the output file is determined by its filename suffix.
@@ -24,7 +24,7 @@ for example, the samplerate will be the maximal samplerate
 occurring in the inputs.
 The output file will be overwritten if it already exists.
 .Pp
-.Nm sndfile-deinterleave
+.Nm sndwave-deinterleave
 creates two or more mono files from a multi-channel audio file,
 containing data from the individual channels. The names of the
 resulting mono files are of the form
@@ -43,12 +43,12 @@ is the same as that of the original file.
 .Sh EXAMPLES
 Merge a mono OGG file and a mono FLAC file into a stereo WAV file:
 .Bd -literal -offset indent
-$ sndfile-interleave left.ogg right.flac -o stereo.wav
+$ sndwave-interleave left.ogg right.flac -o stereo.wav
 .Ed
 .Pp
 Split a multi-channel into individual mono files:
 .Bd -literal -offset indent
-$ sndfile-deinterleave multi.wav
+$ sndwave-deinterleave multi.wav
 Input file : multi
 Output files :
     multi_00.wav
@@ -56,7 +56,6 @@ Output files :
     multi_02.wav
     multi_03.wav
 .Ed
-.Sh SEE ALSO
-.Lk http://www.mega-nerd.com/libsndfile/
 .Sh AUTHORS
 .An Erik de Castro Lopo Aq Mt erikd@mega-nerd.com
+.An evpobr Aq Mt evpobr@gmail.com

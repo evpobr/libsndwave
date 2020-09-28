@@ -22,7 +22,7 @@
 #include	<string.h>
 #include	<math.h>
 
-#include	"sndfile.h"
+#include	"sndwave.h"
 #include	"common.h"
 
 #define STRINGS_DEBUG 0

@@ -36,7 +36,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-#include <sndfile.h>
+#include <sndwave.h>
 
 #include "utils.h"
 

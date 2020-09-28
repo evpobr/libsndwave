@@ -8,7 +8,7 @@ endif ()
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment version")
 
-project(sndfile VERSION 1.0.30)
+project(libsndwave VERSION 1.0.30)
 
 #
 # Variables
@@ -32,11 +32,6 @@ set (CPACK_PACKAGE_VERSION_FULL "${PROJECT_VERSION}${CPACK_PACKAGE_VERSION_STAGE
 # System-wide includes
 #
 
-# Set proper default documentation install directory based on canonical
-# package name, not CMake project name. This option can still be overridden.
-if(NOT CMAKE_INSTALL_DOCDIR)
-	set(CMAKE_INSTALL_DOCDIR "${CMAKE_INSTALL_DATAROOTDIR}/doc/libsndfile")
-endif()
 include (GNUInstallDirs)
 include (FeatureSummary)
 include (CMakeDependentOption)
@@ -146,7 +141,7 @@ feature_summary (WHAT ALL)
 
 configure_file (src/config.h.cmake src/config.h)
 
-configure_file (include/sndfile.h.in include/sndfile.h)
+configure_file (include/sndwave.h.in include/sndwave.h)
 
 if (INSTALL_PKGCONFIG_MODULE)
 
@@ -162,25 +157,21 @@ if (INSTALL_PKGCONFIG_MODULE)
 		endif ()
 	endif ()
 
-	configure_file (sndfile.pc.in sndfile.pc @ONLY)
+	configure_file (sndwave.pc.in sndwave.pc @ONLY)
 
 endif ()
 
 #
-# libsndfile
+# libsndwave
 #
 
-# Public libsndfile headers
-set (sndfile_HDRS
-	include/sndfile.hh
-	${CMAKE_CURRENT_BINARY_DIR}/include/sndfile.h
+# Public libsndwave headers
+set (sndwave_HDRS
+	include/sndwave.hh
+	${CMAKE_CURRENT_BINARY_DIR}/include/sndwave.h
 	)
 
-#
-# libsndfile static library
-#
-
-add_library (sndfile
+add_library (sndwave
 	src/sfconfig.h
 	src/sfendian.h
 	src/sf_unistd.h
@@ -293,13 +284,13 @@ add_library (sndfile
 	src/ALAC/matrix_enc.c
 	src/ALAC/alac_decoder.c
 	src/ALAC/alac_encoder.c
-	${sndfile_HDRS}
+	${sndwave_HDRS}
 	${CMAKE_CURRENT_BINARY_DIR}/src/config.h
 	)
 
-add_library (SndFile::sndfile ALIAS sndfile)
+add_library (SndWave::sndwave ALIAS sndwave)
 
-target_include_directories (sndfile
+target_include_directories (sndwave
 	PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
@@ -308,7 +299,7 @@ target_include_directories (sndfile
 		src
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/src>
 	)
-target_link_libraries (sndfile
+target_link_libraries (sndwave
 	PRIVATE
 		$<$<BOOL:${LIBM_REQUIRED}>:m>
 		$<$<BOOL:${HAVE_EXTERNAL_XIPH_LIBS}>:Vorbis::vorbisenc>
@@ -316,13 +307,13 @@ target_link_libraries (sndfile
 		$<$<AND:$<BOOL:${ENABLE_EXPERIMENTAL}>,$<BOOL:${HAVE_EXTERNAL_XIPH_LIBS}>,$<BOOL:${HAVE_SPEEX}>>:Speex::Speex>
 		$<$<BOOL:${HAVE_EXTERNAL_XIPH_LIBS}>:Opus::opus>
 	)
-set_target_properties (sndfile PROPERTIES
-	PUBLIC_HEADER "${sndfile_HDRS}"
+set_target_properties (sndwave PROPERTIES
+	PUBLIC_HEADER "${sndwave_HDRS}"
 	)
 
 if (MINGW OR CYGWIN)
-	set_target_properties (sndfile PROPERTIES
-		RUNTIME_OUTPUT_NAME "sndfile-1"
+	set_target_properties (sndwave PROPERTIES
+		RUNTIME_OUTPUT_NAME "sndwave-1"
 		)
 endif ()
 
@@ -339,7 +330,7 @@ if (BUILD_SHARED_LIBS)
 		configure_file (src/version-metadata.rc.in src/version-metadata.rc @ONLY)
 	endif ()
 
-	set_target_properties (sndfile PROPERTIES
+	set_target_properties (sndwave PROPERTIES
 		SOVERSION ${PROJECT_VERSION_MAJOR}
 		VERSION ${PROJECT_VERSION}
 		)
@@ -369,36 +360,36 @@ if (BUILD_SHARED_LIBS)
 
 		add_custom_target (GENFILES DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME})
 		if (SYMBOL_OS MATCHES "win32")
-			target_sources (sndfile
+			target_sources (sndwave
 				PRIVATE
 					${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}
 				)
 		elseif (SYMBOL_OS MATCHES "darwin")
-			add_dependencies (sndfile GENFILES)
+			add_dependencies (sndwave GENFILES)
 			if (CMAKE_VERSION VERSION_LESS 3.13)
-				set_property (TARGET sndfile APPEND_STRING PROPERTY
+				set_property (TARGET sndwave APPEND_STRING PROPERTY
 					LINK_FLAGS "-Wl,-exported_symbols_list -Wl,${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}"
 					)
 			else ()
-				target_link_options (sndfile PRIVATE "LINKER:-exported_symbols_list,${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}")
+				target_link_options (sndwave PRIVATE "LINKER:-exported_symbols_list,${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}")
 			endif()
 		elseif (SYMBOL_OS MATCHES "os")
-			add_dependencies (sndfile GENFILES)
+			add_dependencies (sndwave GENFILES)
 			if (CMAKE_VERSION VERSION_LESS 3.13)
-				set_property (TARGET sndfile APPEND_STRING PROPERTY
+				set_property (TARGET sndwave APPEND_STRING PROPERTY
 					LINK_FLAGS "-Wl,-export-symbols ${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}"
 					)
 			else ()
-				target_link_options (sndfile PRIVATE "LINKER:-export-symbols ${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}")
+				target_link_options (sndwave PRIVATE "LINKER:-export-symbols ${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}")
 			endif()
 		elseif (UNIX)
-			add_dependencies (sndfile GENFILES)
+			add_dependencies (sndwave GENFILES)
 			if (CMAKE_VERSION VERSION_LESS 3.13)
-				set_property (TARGET sndfile APPEND_STRING PROPERTY
+				set_property (TARGET sndwave APPEND_STRING PROPERTY
 					LINK_FLAGS "-Wl,--version-script,${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}"
 					)
 			else ()
-				target_link_options (sndfile PRIVATE "LINKER:--version-script,${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}")
+				target_link_options (sndwave PRIVATE "LINKER:--version-script,${CMAKE_CURRENT_BINARY_DIR}/src/${SYMBOL_FILENAME}")
 			endif()
 		endif()
 	endif()
@@ -411,155 +402,155 @@ endif ()
 
 if (BUILD_PROGRAMS)
 
-# sndfile-info
+# sndwave-info
 
-	add_executable (sndfile-info
+	add_executable (sndwave-info
 		programs/sndfile-info.c
 		programs/common.c
 		programs/common.h
 		)
-	target_link_libraries (sndfile-info
+	target_link_libraries (sndwave-info
 		PRIVATE
-			sndfile
+			sndwave
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
 
-# sndfile-play
+# sndwave-play
 
-	add_executable (sndfile-play
+	add_executable (sndwave-play
 		$<$<NOT:$<BOOL:${BEOS}>>:programs/sndfile-play.c>
 		$<$<NOT:$<BOOL:${BEOS}>>:programs/common.c>
 		$<$<NOT:$<BOOL:${BEOS}>>:programs/sndfile-play.c>
 		$<$<BOOL:${BEOS}>:programs/sndfile-play-beos.cpp>
 		)
-	target_include_directories (sndfile-play
+	target_include_directories (sndwave-play
 		PRIVATE
 			src
 			${CMAKE_CURRENT_BINARY_DIR}/src
 		)
-	target_link_libraries (sndfile-play PRIVATE $<$<BOOL:${LIBM_REQUIRED}>:m>)
-	target_link_libraries (sndfile-play PRIVATE sndfile)
+	target_link_libraries (sndwave-play PRIVATE $<$<BOOL:${LIBM_REQUIRED}>:m>)
+	target_link_libraries (sndwave-play PRIVATE sndwave)
 	if (WIN32)
-		target_link_libraries(sndfile-play PRIVATE winmm)
+		target_link_libraries(sndwave-play PRIVATE winmm)
 	# Maybe ALSA & Sndio are present in BeOS. They are not required
 	# so skip them anyway.
 	elseif ((NOT BEOS) AND ALSA_FOUND)
-		target_include_directories (sndfile-play PRIVATE ${ALSA_INCLUDE_DIRS})
-		target_link_libraries (sndfile-play PRIVATE ${ALSA_LIBRARIES})
+		target_include_directories (sndwave-play PRIVATE ${ALSA_INCLUDE_DIRS})
+		target_link_libraries (sndwave-play PRIVATE ${ALSA_LIBRARIES})
 	elseif ((NOT BEOS) AND SNDIO_FOUND)
-		target_link_libraries (sndfile-play PRIVATE Sndio::Sndio)
+		target_link_libraries (sndwave-play PRIVATE Sndio::Sndio)
 	endif ()
 
-# sndfile-convert
+# sndwave-convert
 
-	add_executable (sndfile-convert
+	add_executable (sndwave-convert
 		programs/sndfile-convert.c
 		programs/common.c
 		programs/common.h
 		)
-	target_link_libraries (sndfile-convert PRIVATE sndfile $<$<BOOL:${LIBM_REQUIRED}>:m>)
+	target_link_libraries (sndwave-convert PRIVATE sndwave $<$<BOOL:${LIBM_REQUIRED}>:m>)
 
-# sndfile-cmp
+# sndwave-cmp
 
-	add_executable (sndfile-cmp
+	add_executable (sndwave-cmp
 		programs/sndfile-cmp.c
 		programs/common.c
 		programs/common.h
 		)
-	target_include_directories (sndfile-cmp
+	target_include_directories (sndwave-cmp
 		PUBLIC
 			src
 			${CMAKE_CURRENT_BINARY_DIR}/src
 			${CMAKE_CURRENT_BINARY_DIR}/tests
 		)
-	target_link_libraries (sndfile-cmp PRIVATE sndfile $<$<BOOL:${LIBM_REQUIRED}>:m>)
+	target_link_libraries (sndwave-cmp PRIVATE sndwave $<$<BOOL:${LIBM_REQUIRED}>:m>)
 
-# sndfile-metadata-set
+# sndwave-metadata-set
 
-	add_executable (sndfile-metadata-set
+	add_executable (sndwave-metadata-set
 		programs/sndfile-metadata-set.c
 		programs/common.c
 		programs/common.h
 		)
-	target_include_directories (sndfile-metadata-set
+	target_include_directories (sndwave-metadata-set
 		PUBLIC
 			src
 			${CMAKE_CURRENT_BINARY_DIR}/src
 			${CMAKE_CURRENT_BINARY_DIR}/tests
 		)
-	target_link_libraries (sndfile-metadata-set PRIVATE sndfile $<$<BOOL:${LIBM_REQUIRED}>:m>)
+	target_link_libraries (sndwave-metadata-set PRIVATE sndwave $<$<BOOL:${LIBM_REQUIRED}>:m>)
 
-# sndfile-metadata-get
+# sndwave-metadata-get
 
-	add_executable (sndfile-metadata-get
+	add_executable (sndwave-metadata-get
 		programs/sndfile-metadata-get.c
 		programs/common.c
 		programs/common.h
 		)
-	target_include_directories (sndfile-metadata-get
+	target_include_directories (sndwave-metadata-get
 		PUBLIC
 			src
 			${CMAKE_CURRENT_BINARY_DIR}/src
 			${CMAKE_CURRENT_BINARY_DIR}/tests
 		)
-	target_link_libraries (sndfile-metadata-get PRIVATE sndfile $<$<BOOL:${LIBM_REQUIRED}>:m>)
+	target_link_libraries (sndwave-metadata-get PRIVATE sndwave $<$<BOOL:${LIBM_REQUIRED}>:m>)
 
-# sndfile-interleave
+# sndwave-interleave
 
-	add_executable (sndfile-interleave
+	add_executable (sndwave-interleave
 		programs/sndfile-interleave.c
 		programs/common.c
 		programs/common.h
 		)
-	target_link_libraries (sndfile-interleave PRIVATE sndfile $<$<BOOL:${LIBM_REQUIRED}>:m>)
+	target_link_libraries (sndwave-interleave PRIVATE sndwave $<$<BOOL:${LIBM_REQUIRED}>:m>)
 
-# sndfile-deinterleave
+# sndwave-deinterleave
 
-	add_executable (sndfile-deinterleave
+	add_executable (sndwave-deinterleave
 		programs/sndfile-deinterleave.c
 		programs/common.c
 		programs/common.h
 		)
-	target_link_libraries (sndfile-deinterleave PRIVATE sndfile $<$<BOOL:${LIBM_REQUIRED}>:m>)
+	target_link_libraries (sndwave-deinterleave PRIVATE sndwave $<$<BOOL:${LIBM_REQUIRED}>:m>)
 
-# sndfile-concat
+# sndwave-concat
 
-	add_executable (sndfile-concat
+	add_executable (sndwave-concat
 		programs/sndfile-concat.c
 		programs/common.c
 		programs/common.h
 		)
-	target_link_libraries (sndfile-concat PRIVATE sndfile $<$<BOOL:${LIBM_REQUIRED}>:m>)
+	target_link_libraries (sndwave-concat PRIVATE sndwave $<$<BOOL:${LIBM_REQUIRED}>:m>)
 
-# sndfile-salvage
+# sndwave-salvage
 
-	add_executable (sndfile-salvage
+	add_executable (sndwave-salvage
 		programs/sndfile-salvage.c
 		programs/common.c
 		programs/common.h
 		)
-	target_include_directories (sndfile-salvage
+	target_include_directories (sndwave-salvage
 		PUBLIC
 			src
 			${CMAKE_CURRENT_BINARY_DIR}/src
 			${CMAKE_CURRENT_BINARY_DIR}/tests
 		)
-	target_link_libraries (sndfile-salvage PRIVATE sndfile $<$<BOOL:${LIBM_REQUIRED}>:m>)
+	target_link_libraries (sndwave-salvage PRIVATE sndwave $<$<BOOL:${LIBM_REQUIRED}>:m>)
 
-	set (SNDFILE_PROGRAM_TARGETS
-		sndfile-info
-		sndfile-play
-		sndfile-convert
-		sndfile-cmp
-		sndfile-metadata-set
-		sndfile-metadata-get
-		sndfile-interleave
-		sndfile-deinterleave
-		sndfile-concat
-		sndfile-salvage
+	set (SNDWAVE_PROGRAM_TARGETS
+		sndwave-info
+		sndwave-play
+		sndwave-convert
+		sndwave-cmp
+		sndwave-metadata-set
+		sndwave-metadata-get
+		sndwave-interleave
+		sndwave-deinterleave
+		sndwave-concat
+		sndwave-salvage
 		)
 
-	set_target_properties(${SNDFILE_PROGRAM_TARGETS} PROPERTIES FOLDER Programs)
+	set_target_properties(${SNDWAVE_PROGRAM_TARGETS} PROPERTIES FOLDER Programs)
 
 endif ()
 
@@ -569,22 +560,22 @@ endif ()
 
 if (BUILD_EXAMPLES)
 
-# sndfile-to-text
+# sndwave-to-text
 
-	add_executable (sndfile-to-text examples/sndfile-to-text.c)
-	target_link_libraries (sndfile-to-text PRIVATE sndfile)
+	add_executable (sndwave-to-text examples/sndfile-to-text.c)
+	target_link_libraries (sndwave-to-text PRIVATE sndwave)
 
-# sndfile-loopify
+# sndwave-loopify
 
-	add_executable (sndfile-loopify examples/sndfile-loopify.c)
-	target_link_libraries (sndfile-loopify PRIVATE sndfile)
+	add_executable (sndwave-loopify examples/sndfile-loopify.c)
+	target_link_libraries (sndwave-loopify PRIVATE sndwave)
 
 # make_sine
 
 	add_executable (make_sine examples/make_sine.c)
 	target_link_libraries (make_sine
 		PRIVATE
-			sndfile
+			sndwave
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
 
@@ -593,7 +584,7 @@ if (BUILD_EXAMPLES)
 	add_executable (sfprocess examples/sfprocess.c)
 	target_link_libraries (sfprocess
 		PRIVATE
-			sndfile
+			sndwave
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
 
@@ -602,25 +593,25 @@ if (BUILD_EXAMPLES)
 	add_executable (list_formats examples/list_formats.c)
 	target_link_libraries (list_formats
 		PRIVATE
-			sndfile
+			sndwave
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
 
-# sndfilehandle
+# sndwavehandle
 
-	add_executable (sndfilehandle examples/sndfilehandle.cc)
-	target_link_libraries (sndfilehandle PUBLIC sndfile)
+	add_executable (sndwavehandle examples/sndfilehandle.cc)
+	target_link_libraries (sndwavehandle PUBLIC sndwave)
 
-	set (SNDFILE_EXAMPLE_TARGETS
-		sndfile-to-text
-		sndfile-loopify
+	set (SNDWAVE_EXAMPLE_TARGETS
+		sndwave-to-text
+		sndwave-loopify
 		make_sine
 		sfprocess
 		list_formats
-		sndfilehandle
+		sndwavehandle
 		)
 
-	set_target_properties(${SNDFILE_EXAMPLE_TARGETS} PROPERTIES FOLDER Examples)
+	set_target_properties(${SNDWAVE_EXAMPLE_TARGETS} PROPERTIES FOLDER Examples)
 
 
 endif ()
@@ -634,15 +625,15 @@ if (ENABLE_PACKAGE_CONFIG)
 	if (WIN32 AND (NOT MINGW) AND (NOT CYGWIN))
 		set (CMAKE_INSTALL_PACKAGEDIR cmake) 
 	 else ()
-	 	set (CMAKE_INSTALL_PACKAGEDIR ${CMAKE_INSTALL_LIBDIR}/cmake/SndFile)
+	 	set (CMAKE_INSTALL_PACKAGEDIR ${CMAKE_INSTALL_LIBDIR}/cmake/SndWave)
 	 endif()
 
-	 install (TARGETS ${SNDFILE_PROGRAM_TARGETS}
+	 install (TARGETS ${SNDWAVE_PROGRAM_TARGETS}
 		RUNTIME DESTINATION			${CMAKE_INSTALL_BINDIR}
  	)
 
-	install (TARGETS sndfile
-		EXPORT SndFileTargets
+	install (TARGETS sndwave
+		EXPORT SndWaveTargets
 		RUNTIME DESTINATION			${CMAKE_INSTALL_BINDIR}
 		ARCHIVE DESTINATION			${CMAKE_INSTALL_LIBDIR}
 		LIBRARY DESTINATION			${CMAKE_INSTALL_LIBDIR}
@@ -652,32 +643,32 @@ if (ENABLE_PACKAGE_CONFIG)
 	include (CMakePackageConfigHelpers)
 
 	if (ENABLE_EXTERNAL_LIBS)
-		set (SndFile_WITH_EXTERNAL_LIBS 1)
+		set (SndWave_WITH_EXTERNAL_LIBS 1)
 	else ()
-		set (SndFile_WITH_EXTERNAL_LIBS 0)
+		set (SndWave_WITH_EXTERNAL_LIBS 0)
 	endif ()
 
 	set (INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR})
-	configure_package_config_file(cmake/SndFileConfig.cmake.in SndFileConfig.cmake
+	configure_package_config_file(cmake/SndWaveConfig.cmake.in SndWaveConfig.cmake
 		INSTALL_DESTINATION ${CMAKE_INSTALL_PACKAGEDIR}
 		PATH_VARS INCLUDE_INSTALL_DIR
 		)
-	write_basic_package_version_file (SndFileConfigVersion.cmake COMPATIBILITY SameMajorVersion)
+	write_basic_package_version_file (SndWaveConfigVersion.cmake COMPATIBILITY SameMajorVersion)
 
-	install(EXPORT SndFileTargets
-		NAMESPACE SndFile::
+	install(EXPORT SndWaveTargets
+		NAMESPACE SndWave::
 		DESTINATION ${CMAKE_INSTALL_PACKAGEDIR}
 		)
 	install(
 		FILES
-			${CMAKE_CURRENT_BINARY_DIR}/SndFileConfig.cmake
-			${CMAKE_CURRENT_BINARY_DIR}/SndFileConfigVersion.cmake
+			${CMAKE_CURRENT_BINARY_DIR}/SndWaveConfig.cmake
+			${CMAKE_CURRENT_BINARY_DIR}/SndWaveConfigVersion.cmake
 		DESTINATION	${CMAKE_INSTALL_PACKAGEDIR}
 		)
 
 else ()
 
-	install (TARGETS sndfile ${sdnfile_PROGRAMS}
+	install (TARGETS sndwave ${sdnwave_PROGRAMS}
 		RUNTIME DESTINATION			${CMAKE_INSTALL_BINDIR}
 		ARCHIVE DESTINATION			${CMAKE_INSTALL_LIBDIR}
 		LIBRARY DESTINATION			${CMAKE_INSTALL_LIBDIR}
@@ -688,22 +679,22 @@ endif ()
 if (INSTALL_MANPAGES)
 
 	set (man_MANS
-		man/sndfile-info.1
-		man/sndfile-play.1
-		man/sndfile-convert.1
-		man/sndfile-cmp.1
-		man/sndfile-metadata-get.1
-		man/sndfile-concat.1
-		man/sndfile-interleave.1
-		man/sndfile-salvage.1
+		man/sndwave-info.1
+		man/sndwave-play.1
+		man/sndwave-convert.1
+		man/sndwave-cmp.1
+		man/sndwave-metadata-get.1
+		man/sndwave-concat.1
+		man/sndwave-interleave.1
+		man/sndwave-salvage.1
 		)
 	install (FILES ${man_MANS} DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
-	install (FILES man/sndfile-metadata-get.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 RENAME sndfile-metadata-set.1)
-	install (FILES man/sndfile-interleave.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 RENAME sndfile-deinterleave.1)
+	install (FILES man/sndwave-metadata-get.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 RENAME sndwave-metadata-set.1)
+	install (FILES man/sndwave-interleave.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 RENAME sndwave-deinterleave.1)
 endif ()
 
 if (INSTALL_PKGCONFIG_MODULE)
-	install (FILES ${CMAKE_CURRENT_BINARY_DIR}/sndfile.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+	install (FILES ${CMAKE_CURRENT_BINARY_DIR}/sndwave.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 endif ()
 
 #
@@ -722,7 +713,7 @@ if (BUILD_TESTING)
 			tests
 			${CMAKE_CURRENT_BINARY_DIR}/src
 		)
-	target_link_libraries(test_utils PRIVATE sndfile)
+	target_link_libraries(test_utils PRIVATE sndwave)
 
 	### test_main
 
@@ -748,7 +739,7 @@ if (BUILD_TESTING)
 			${CMAKE_CURRENT_BINARY_DIR}/src
 			${CMAKE_CURRENT_BINARY_DIR}/tests
 		)
-	target_link_libraries (test_main PRIVATE sndfile)
+	target_link_libraries (test_main PRIVATE sndwave)
 	if (MSVC)
 		target_compile_definitions (test_main PRIVATE _USE_MATH_DEFINES)
 	endif ()
@@ -762,7 +753,7 @@ if (BUILD_TESTING)
 			src
 			${CMAKE_CURRENT_BINARY_DIR}/src
 		)
-	target_link_libraries (sfversion sndfile)
+	target_link_libraries (sfversion sndwave)
 	add_test (sfversion sfversion)
 	set_tests_properties (sfversion PROPERTIES
 		PASS_REGULAR_EXPRESSION "${PACKAGE_NAME}-${CPACK_PACKAGE_VERSION_FULL}"
@@ -773,7 +764,7 @@ if (BUILD_TESTING)
 	add_executable (error_test tests/error_test.c)
 	target_link_libraries (error_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -783,7 +774,7 @@ if (BUILD_TESTING)
 	add_executable (ulaw_test tests/ulaw_test.c)
 	target_link_libraries (ulaw_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -793,7 +784,7 @@ if (BUILD_TESTING)
 	add_executable (alaw_test tests/alaw_test.c)
 	target_link_libraries (alaw_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -804,7 +795,7 @@ if (BUILD_TESTING)
 	add_executable (dwvw_test tests/dwvw_test.c)
 	target_link_libraries (dwvw_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -815,7 +806,7 @@ if (BUILD_TESTING)
 	add_executable (command_test tests/command_test.c)
 	target_link_libraries (command_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -829,7 +820,7 @@ if (BUILD_TESTING)
 		)
 	target_link_libraries (floating_point_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -841,7 +832,7 @@ if (BUILD_TESTING)
 	add_executable (checksum_test tests/checksum_test.c)
 	target_link_libraries (checksum_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -852,7 +843,7 @@ if (BUILD_TESTING)
 	add_executable (scale_clip_test tests/scale_clip_test.c)
 	target_link_libraries (scale_clip_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -863,7 +854,7 @@ if (BUILD_TESTING)
 	add_executable (headerless_test tests/headerless_test.c)
 	target_link_libraries (headerless_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -874,7 +865,7 @@ if (BUILD_TESTING)
 	add_executable (rdwr_test tests/rdwr_test.c)
 	target_link_libraries (rdwr_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -885,7 +876,7 @@ if (BUILD_TESTING)
 	add_executable (locale_test tests/locale_test.c)
 	target_link_libraries (locale_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -893,10 +884,10 @@ if (BUILD_TESTING)
 
 	### win32_ordinal_test
 
-# Disabled because we cannot test with shared sndfile library
+# Disabled because we cannot test with shared sndwave library
 #	if (WIN32 AND BUILD_SHARED_LIBS)
 #		add_executable (win32_ordinal_test tests/win32_ordinal_test.c)
-#		target_link_libraries (win32_ordinal_test PRIVATE sndfile test_utils)
+#		target_link_libraries (win32_ordinal_test PRIVATE sndwave test_utils)
 #		add_test (win32_ordinal_test win32_ordinal_test)
 #	endif ()
 
@@ -905,7 +896,7 @@ if (BUILD_TESTING)
 	add_executable (cpp_test tests/cpp_test.cc)
 	target_link_libraries (cpp_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -916,7 +907,7 @@ if (BUILD_TESTING)
 	add_executable (external_libs_test tests/external_libs_test.c)
 	target_link_libraries (external_libs_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -927,7 +918,7 @@ if (BUILD_TESTING)
 	add_executable (format_check_test tests/format_check_test.c)
 	target_link_libraries (format_check_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -938,7 +929,7 @@ if (BUILD_TESTING)
 	add_executable (channel_test tests/channel_test.c)
 	target_link_libraries (channel_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -949,7 +940,7 @@ if (BUILD_TESTING)
 	add_executable (pcm_test tests/pcm_test.c)
 	target_link_libraries (pcm_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -963,7 +954,7 @@ if (BUILD_TESTING)
 	)
 	target_link_libraries (write_read_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -972,7 +963,7 @@ if (BUILD_TESTING)
 	add_executable (lossy_comp_test tests/lossy_comp_test.c)
 	target_link_libraries (lossy_comp_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -980,7 +971,7 @@ if (BUILD_TESTING)
 	add_executable (peak_chunk_test tests/peak_chunk_test.c)
 	target_link_libraries (peak_chunk_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -988,7 +979,7 @@ if (BUILD_TESTING)
 	add_executable (header_test tests/header_test.c)
 	target_link_libraries (header_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -996,7 +987,7 @@ if (BUILD_TESTING)
 	add_executable (misc_test tests/misc_test.c)
 	target_link_libraries (misc_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1004,7 +995,7 @@ if (BUILD_TESTING)
 	add_executable (string_test tests/string_test.c)
 	target_link_libraries (string_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1012,7 +1003,7 @@ if (BUILD_TESTING)
 	add_executable (multi_file_test tests/multi_file_test.c)
 	target_link_libraries (multi_file_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1020,7 +1011,7 @@ if (BUILD_TESTING)
 	add_executable (aiff_rw_test tests/aiff_rw_test.c)
 	target_link_libraries (aiff_rw_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1028,7 +1019,7 @@ if (BUILD_TESTING)
 	add_executable (chunk_test tests/chunk_test.c)
 	target_link_libraries (chunk_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1036,7 +1027,7 @@ if (BUILD_TESTING)
 	add_executable (long_read_write_test tests/long_read_write_test.c)
 	target_link_libraries (long_read_write_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1044,7 +1035,7 @@ if (BUILD_TESTING)
 	add_executable (raw_test tests/raw_test.c)
 	target_link_libraries (raw_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1052,7 +1043,7 @@ if (BUILD_TESTING)
 	add_executable (compression_size_test tests/compression_size_test.c)
 	target_link_libraries (compression_size_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1060,7 +1051,7 @@ if (BUILD_TESTING)
 	add_executable (ogg_test tests/ogg_test.c)
 	target_link_libraries (ogg_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1068,7 +1059,7 @@ if (BUILD_TESTING)
 	add_executable (ogg_opus_test tests/ogg_opus_test.c)
 	target_link_libraries (ogg_opus_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1076,7 +1067,7 @@ if (BUILD_TESTING)
 	add_executable (stdin_test tests/stdin_test.c)
 	target_link_libraries (stdin_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1085,7 +1076,7 @@ if (BUILD_TESTING)
 	add_executable (stdout_test tests/stdout_test.c)
 	target_link_libraries (stdout_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1094,7 +1085,7 @@ if (BUILD_TESTING)
 	add_executable (stdio_test tests/stdio_test.c)
 	target_link_libraries (stdio_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1102,7 +1093,7 @@ if (BUILD_TESTING)
 	add_executable (pipe_test tests/pipe_test.c)
 	target_link_libraries (pipe_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1110,7 +1101,7 @@ if (BUILD_TESTING)
 	add_executable (virtual_io_test tests/virtual_io_test.c)
 	target_link_libraries (virtual_io_test
 		PRIVATE
-			sndfile
+			sndwave
 			test_utils
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
@@ -1125,7 +1116,7 @@ if (BUILD_TESTING)
 		)
 	target_link_libraries (g72x_test
 		PRIVATE
-			sndfile
+			sndwave
 			$<$<BOOL:${LIBM_REQUIRED}>:m>
 		)
 	add_test (g72x_test g72x_test all)
@@ -1309,7 +1300,7 @@ if (BUILD_TESTING)
 	add_test (pipe_test pipe_test)
 	add_test (virtual_io_test virtual_io_test)
 
-	set (SNDFILE_TEST_TARGETS
+	set (SNDWAVE_TEST_TARGETS
 		test_utils
 		test_main
 		sfversion
@@ -1351,10 +1342,10 @@ if (BUILD_TESTING)
 		)
 
 #	if (WIN32 AND BUILD_SHARED_LIBS)
-#		list (APPEND SNDFILE_TEST_TARGETS win32_ordinal_test)
+#		list (APPEND SNDWAVE_TEST_TARGETS win32_ordinal_test)
 #	endif ()
 
-	set_target_properties(${SNDFILE_TEST_TARGETS} PROPERTIES FOLDER Tests)
+	set_target_properties(${SNDWAVE_TEST_TARGETS} PROPERTIES FOLDER Tests)
 
 endif ()
 

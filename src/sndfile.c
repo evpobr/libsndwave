@@ -23,7 +23,7 @@
 #include	<ctype.h>
 #include	<assert.h>
 
-#include	"sndfile.h"
+#include	"sndwave.h"
 #include	"sfendian.h"
 #include	"common.h"
 

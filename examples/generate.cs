@@ -17,7 +17,7 @@
 ** ****************************
 **
 ** How to use:
-**    - libsndfile.dll must have already been compiled and be in this
+**    - sndwave.dll must have already been compiled and be in this
 **      application's search path
 **
 **    - You must edit this file to point to the file you want to convert. Set
@@ -147,25 +147,25 @@ class lsndf_example {
 //	make this application work. The below code should give some clues as to
 //	how to add the rest since they have a lot of parameter and return type
 //	similarities.
-	[DllImport("libsndfile.dll")]
+	[DllImport("sndwave.dll")]
 	public static extern IntPtr sf_open ([MarshalAs(UnmanagedType.LPStr)] string path, int mode, ref SF_INFO sfinfo);
 
-	[DllImport("libsndfile.dll")]
+	[DllImport("sndwave.dll")]
 	static extern int sf_error (IntPtr sndfile);
 
-	[DllImport("libsndfile.dll")]
+	[DllImport("sndwave.dll")]
 	static extern IntPtr sf_strerror (IntPtr sndfile);
 
-	[DllImport("libsndfile.dll")]
+	[DllImport("sndwave.dll")]
 	static extern int sf_format_check (ref SF_INFO info);
 
-	[DllImport("libsndfile.dll")]
+	[DllImport("sndwave.dll")]
 	static extern sf_count_t sf_read_float	(IntPtr sndfile, float[] ptr, sf_count_t items);
 
-	[DllImport("libsndfile.dll")]
+	[DllImport("sndwave.dll")]
 	static extern sf_count_t sf_write_float	(IntPtr sndfile, float[] ptr, sf_count_t items);
 
-	[DllImport("libsndfile.dll")]
+	[DllImport("sndwave.dll")]
     static extern int sf_close (IntPtr sndfile);
 
 

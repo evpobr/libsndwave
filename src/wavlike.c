@@ -24,7 +24,7 @@
 #include	<ctype.h>
 #include	<time.h>
 
-#include	"sndfile.h"
+#include	"sndwave.h"
 #include	"sfendian.h"
 #include	"common.h"
 #include	"wavlike.h"

@@ -28,7 +28,7 @@
 #include "sf_unistd.h"
 #endif
 
-#include "sndfile.h"
+#include "sndwave.h"
 #include "utils.h"
 
 static void format_error_test (void) ;

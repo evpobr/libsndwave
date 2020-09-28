@@ -26,7 +26,7 @@
 #include "sf_unistd.h"
 #endif
 
-#include <sndfile.h>
+#include <sndwave.h>
 
 #define	BUFFER_SIZE		(1024)
 

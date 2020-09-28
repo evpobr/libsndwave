@@ -1,0 +1,32 @@
+set(SndWave_VERSION @PROJECT_VERSION@)
+set(SndWave_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(SndWave_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(SndWave_VERSION_PATCH @PROJECT_VERSION_PATCH@)
+
+set (SndWave_WITH_EXTERNAL_LIBS @SndWave_WITH_EXTERNAL_LIBS@)
+
+@PACKAGE_INIT@
+
+include (CMakeFindDependencyMacro)
+
+if (SndWave_WITH_EXTERNAL_LIBS AND NOT @BUILD_SHARED_LIBS@)
+	find_dependency (Ogg 1.3)
+	find_dependency (Vorbis)
+	find_dependency (FLAC)
+	find_dependency (Opus)
+endif ()
+
+include (${CMAKE_CURRENT_LIST_DIR}/SndWaveTargets.cmake)
+
+set_and_check (SndWave_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@")
+set (SNDWAVE_INCLUDE_DIR ${SndWave_INCLUDE_DIR})
+
+set (SndWave_LIBRARY SndWave::sndfile)
+set (SNDWAVE_LIBRARY SndWave::sndfile)
+set (SndWave_LIBRARIES SndWave::sndfile)
+set (SNDWAVE_LIBRARIES SndWave::sndfile)
+
+
+check_required_components(SndWave)
+
+set (SNDFILE_FOUND 1)

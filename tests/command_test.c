@@ -33,7 +33,7 @@
 
 #include <math.h>
 
-#include <sndfile.h>
+#include <sndwave.h>
 
 #include "sfendian.h"
 #include "utils.h"
