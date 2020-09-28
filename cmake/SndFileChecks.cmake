@@ -55,7 +55,6 @@ else ()
 endif ()
 
 find_package (Speex)
-find_package (SQLite3)
 
 check_include_file (byteswap.h		HAVE_BYTESWAP_H)
 check_include_file (dlfcn.h			HAVE_DLFCN_H)
@@ -131,8 +130,6 @@ if (NOT WIN32)
 		list (APPEND CMAKE_REQUIRED_LIBRARIES m)
 	endif ()
 endif ()
-
-check_library_exists (sqlite3 sqlite3_close "" HAVE_SQLITE3)
 
 check_function_exists (fstat     		HAVE_FSTAT)
 check_function_exists (fstat64			HAVE_FSTAT64)
@@ -265,7 +262,3 @@ if (DEFINED ENABLE_STATIC_RUNTIME)
 		message(AUTHOR_WARNING "ENABLE_STATIC_RUNTIME option is for MSVC compiler only.")
 	endif ()
 endif ()
-
-if (BUILD_SHARED_LIBS)
-	find_package (PythonInterp REQUIRED)
-endif()

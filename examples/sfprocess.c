@@ -33,15 +33,15 @@
 #include	<stdio.h>
 #include	<string.h>
 
-/* Include this header file to use functions from libsndfile. */
-#include	<sndfile.h>
+/* Include this header file to use functions from libsndwave. */
+#include	<sndwave/sndwave.h>
 
 /*	This will be the length of the buffer used to hold.frames while
 **	we process them.
 */
 #define		BUFFER_LEN	1024
 
-/* libsndfile can handle more than 6 channels but we'll restrict it to 6. */
+/* libsndwave can handle more than 6 channels but we'll restrict it to 6. */
 #define		MAX_CHANNELS	6
 
 /* Function prototype. */

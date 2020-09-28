@@ -28,7 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "sndfile.h"
+#include "sndwave/sndwave.h"
 #include "common.h"
 #include "chanmap.h"
 

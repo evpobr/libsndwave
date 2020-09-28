@@ -48,7 +48,7 @@
 #include	<sys/stat.h>
 #include	<sys/types.h>
 
-#include	<sndfile.h>
+#include	<sndwave/sndwave.h>
 
 #include	"common.h"
 

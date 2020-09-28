@@ -25,7 +25,7 @@
 #include	<math.h>
 #include	<inttypes.h>
 
-#include	"sndfile.h"
+#include	"sndwave/sndwave.h"
 #include	"sfendian.h"
 #include	"common.h"
 #include	"chanmap.h"

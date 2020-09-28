@@ -29,7 +29,7 @@
 
 #include <math.h>
 #include <inttypes.h>
-#include <sndfile.h>
+#include <sndwave/sndwave.h>
 
 #include "utils.h"
 

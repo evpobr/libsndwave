@@ -24,7 +24,7 @@
 #include	<math.h>
 #include	<errno.h>
 
-#include	"sndfile.h"
+#include	"sndwave/sndwave.h"
 #include	"sfendian.h"
 #include	"common.h"
 #include	"ALAC/alac_codec.h"

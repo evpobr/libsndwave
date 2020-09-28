@@ -43,7 +43,7 @@
 #include "sf_unistd.h"
 #endif
 
-#include <sndfile.h>
+#include <sndwave/sndwave.h>
 
 #include "common.h"
 

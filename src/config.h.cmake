@@ -139,9 +139,6 @@
 /* Define to 1 if you have the `snprintf' function. */
 #cmakedefine01 HAVE_SNPRINTF
 
-/* Set to 1 if you have libsqlite3. */
-#cmakedefine01 HAVE_SQLITE3
-
 /* Define to 1 if the system has the type `ssize_t'. */
 #cmakedefine01 HAVE_SSIZE_T
 

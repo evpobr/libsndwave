@@ -33,7 +33,7 @@
 
 #include <math.h>
 
-#include <sndfile.h>
+#include <sndwave/sndwave.h>
 
 #include "sfendian.h"
 #include "utils.h"
@@ -1451,8 +1451,8 @@ broadcast_coding_history_size (const char *filename)
 	exit_if_true (bc_read.coding_history_size < 512,
 			"\n\nLine %d : unexpected coding history size %d (should be > 512).\n\n", __LINE__, bc_read.coding_history_size) ;
 
-	exit_if_true (strstr (bc_read.coding_history, "libsndfile") == NULL,
-			"\n\nLine %d : coding history incomplete (should contain 'libsndfile').\n\n", __LINE__) ;
+	exit_if_true (strstr (bc_read.coding_history, "libsndwave") == NULL,
+			"\n\nLine %d : coding history incomplete (should contain 'libsndwave').\n\n", __LINE__) ;
 
 	unlink (filename) ;
 	puts ("ok") ;

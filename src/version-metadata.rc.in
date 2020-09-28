@@ -14,7 +14,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
 	{
 		BLOCK "040904e4"
 		{
-			VALUE "FileDescription", "A library for reading and writing audio files."
+			VALUE "FileDescription", "A library for reading and writing audio files"
 			VALUE "FileVersion", "@CLEAN_VERSION@.0\0"
 			VALUE "Full Version", "@PACKAGE_VERSION@"
 			VALUE "InternalName", "libsndfile"

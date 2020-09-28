@@ -38,7 +38,7 @@
 #include <direct.h>
 #endif
 
-#include	<sndfile.h>
+#include	<sndwave/sndwave.h>
 
 #include	"utils.h"
 

@@ -31,7 +31,7 @@
 #if HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
-#include "sndfile.h"
+#include "sndwave/sndwave.h"
 #include "sfendian.h"
 #include "common.h"
 

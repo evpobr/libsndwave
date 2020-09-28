@@ -30,7 +30,7 @@
 #include "sf_unistd.h"
 #endif
 
-#include <sndfile.h>
+#include <sndwave/sndwave.h>
 
 #include "dft_cmp.h"
 #include "utils.h"
