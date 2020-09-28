@@ -41,7 +41,7 @@ Some IDE support CMake natively or with plugins, check you IDE documentation
 
 1. C99-compliant compiler toolchain (tested with GCC, Clang and Visual
    Studio 2015)
-2. CMake 3.1.3 or newer
+2. CMake 3.13 or newer
 
 There are some recommended packages to enable all features of libsndwave:
 
