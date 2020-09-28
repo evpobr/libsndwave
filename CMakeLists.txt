@@ -8,7 +8,7 @@ endif ()
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment version")
 
-project(libsndwave VERSION 1.0.0)
+project(libsndwave VERSION 1.0.0 DESCRIPTION "A library for reading and writing audio files")
 
 # PROJECT_VERSION above is API version, SNDWAVE_LIBRARY_VERSION is ABI version.
 

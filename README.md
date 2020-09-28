@@ -2,8 +2,7 @@
 
 ![C/C++ CI](https://github.com/evpobr/libsndwave/workflows/C/C++%20CI/badge.svg)
 
-libsndwave is a C library for reading and writing files containing sampled audio
-data.
+A library for reading and writing audio files.
 
 ## Hacking
 
