@@ -27,12 +27,12 @@
 /* This is the version 1.0.X header file. */
 #define	SNDFILE_1
 
-#include "sndwave_export.h"
-#include "sndwave_types.h"
-
 #include <stdio.h>
 #include <stdint.h>
 #include <sys/types.h>
+
+#include "sndwave_export.h"
+#include "sndwave_types.h"
 
 #ifdef __cplusplus
 extern "C" {
