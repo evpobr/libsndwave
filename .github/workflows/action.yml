@@ -8,10 +8,6 @@ jobs:
       fail-fast: false
       matrix:
         name: [
-          ubuntu-gcc-autotools,
-          ubuntu-clang-autotools,
-          ubuntu-gcc-ossfuzz,
-          macos-autotools,
           ubuntu-gcc-cmake,
           ubuntu-gcc-cmake-shared,
           ubuntu-clang-cmake,
@@ -24,30 +20,6 @@ jobs:
           windows-vs2019-Win32-shared
         ]
         include:
-          - name: ubuntu-gcc-autotools
-            os: ubuntu-latest
-            cc: gcc
-            cxx: g++
-            build-system: autotools
-
-          - name: ubuntu-clang-autotools
-            os: ubuntu-latest
-            cc: clang
-            cxx: clang++
-            build-system: autotools
-
-          - name: ubuntu-gcc-ossfuzz
-            os: ubuntu-latest
-            cc: gcc
-            cxx: g++
-            build-system: ossfuzz
-
-          - name: macos-autotools
-            os: macos-latest
-            cc: clang
-            cxx: clang++
-            build-system: autotools
-
           - name: ubuntu-gcc-cmake
             os: ubuntu-latest
             cc: gcc
@@ -180,7 +152,7 @@ jobs:
         if: startsWith(matrix.os,'macos')
         run: |
           brew update
-          brew install autoconf automake libtool libogg libvorbis flac opus sqlite3 speex
+          brew install libogg libvorbis flac opus sqlite3 speex
 
       - name: Install Lunux dependencies
         if: startsWith(matrix.os,'ubuntu')
@@ -190,19 +162,6 @@ jobs:
         if: startsWith(matrix.os,'windows')
         run: |
           vcpkg install libvorbis libflac opus sqlite3 speex --triplet ${{matrix.triplet}}
-
-      - name: Configure, build and test with Autotools
-        env:
-          CC: ${{ matrix.cc }}
-          CXX: ${{ matrix.cxx }}
-        if: startsWith(matrix.build-system,'autotools')
-        run: |
-          ./autogen.sh
-          if [[ "${CC}" == "clang" ]]; then
-            ./configure --enable-werror && make clean all check && make distcheck
-          else
-            Scripts/asan-configure.sh --enable-werror && make clean all check && make distcheck
-          fi
 
       - name: Configure, build and test with CMake
         env:
@@ -215,11 +174,3 @@ jobs:
           cmake .. -G "${{matrix.cmake-generator}}" ${{matrix.cmake-options}}
           cmake --build . --config Release
           ctest
-
-      - name: Configure, build and test with OSSFuzz
-        env:
-          CC: ${{ matrix.cc }}
-          CXX: ${{ matrix.cxx }}
-        if: startsWith(matrix.build-system,'ossfuzz')
-        run: |
-          ./ossfuzz/ci_oss.sh
