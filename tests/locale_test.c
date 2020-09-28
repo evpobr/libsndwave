@@ -37,7 +37,7 @@
 #define ENABLE_SNDFILE_WINDOWS_PROTOTYPES 1
 #endif
 
-#include "sndwave.h"
+#include "sndwave/sndwave.h"
 #include "utils.h"
 
 static void utf8_test (void) ;

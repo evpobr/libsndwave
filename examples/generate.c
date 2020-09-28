@@ -35,7 +35,7 @@
 #include <string.h>
 #include <math.h>
 
-#include <sndwave.h>
+#include <sndwave/sndwave.h>
 
 #define	BUFFER_LEN			4096
 

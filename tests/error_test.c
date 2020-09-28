@@ -33,7 +33,7 @@
 #include <windows.h>
 #endif
 
-#include <sndwave.h>
+#include <sndwave/sndwave.h>
 
 #include "utils.h"
 

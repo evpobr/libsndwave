@@ -34,7 +34,7 @@
 #include	<string.h>
 
 /* Include this header file to use functions from libsndwave. */
-#include	<sndwave.h>
+#include	<sndwave/sndwave.h>
 
 /*	This will be the length of the buffer used to hold.frames while
 **	we process them.

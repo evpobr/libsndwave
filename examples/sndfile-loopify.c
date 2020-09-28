@@ -42,7 +42,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include <sndwave.h>
+#include <sndwave/sndwave.h>
 
 #define BUFFER_LEN		(1 << 14)
 

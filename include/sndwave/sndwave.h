@@ -748,7 +748,7 @@ void	sf_write_sync	(SNDFILE *sndfile) ;
 **
 **		#include <windows.h>
 **		#define ENABLE_SNDFILE_WINDOWS_PROTOTYPES 1
-**		#including <sndwave.h>
+**		#including <sndwave/sndwave.h>
 */
 
 #if (defined (ENABLE_SNDFILE_WINDOWS_PROTOTYPES) && ENABLE_SNDFILE_WINDOWS_PROTOTYPES)

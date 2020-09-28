@@ -36,7 +36,7 @@
 #include <ctype.h>
 #include <float.h>
 
-#include <sndwave.h>
+#include <sndwave/sndwave.h>
 
 #define	BLOCK_SIZE 4096
 

@@ -22,7 +22,7 @@
 #include	<string.h>
 #include	<math.h>
 
-#include	"sndwave.h"
+#include	"sndwave/sndwave.h"
 #include	"common.h"
 
 static SF_FORMAT_INFO const simple_formats [] =

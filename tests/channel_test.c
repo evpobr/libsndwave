@@ -33,7 +33,7 @@
 
 #include <math.h>
 
-#include <sndwave.h>
+#include <sndwave/sndwave.h>
 
 #include "utils.h"
 

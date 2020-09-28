@@ -49,7 +49,7 @@
 #ifndef SNDWAVE_HH
 #define SNDWAVE_HH
 
-#include <sndwave.h>
+#include <sndwave/sndwave.h>
 
 #include <string>
 #include <new> // for std::nothrow

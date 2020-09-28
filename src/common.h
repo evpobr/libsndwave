@@ -34,7 +34,7 @@
 #endif
 
 #ifndef SNDFILE_H
-#include "sndwave.h"
+#include "sndwave/sndwave.h"
 #endif
 
 #ifdef __cplusplus

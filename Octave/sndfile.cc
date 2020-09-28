@@ -18,7 +18,7 @@
 
 #include <octave/oct.h>
 
-#include "sndwave.h"
+#include "sndwave/sndwave.h"
 
 #define FOUR_GIG 		(0x100000000LL)
 #define	BUFFER_FRAMES	8192

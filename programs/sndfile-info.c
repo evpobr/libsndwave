@@ -37,7 +37,7 @@
 #include	<ctype.h>
 #include	<math.h>
 
-#include	<sndwave.h>
+#include	<sndwave/sndwave.h>
 
 #include "common.h"
 

@@ -20,7 +20,7 @@
 
 #include	<stdlib.h>
 
-#include	"sndwave.h"
+#include	"sndwave/sndwave.h"
 #include	"sfendian.h"
 #include	"common.h"
 

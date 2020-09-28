@@ -46,7 +46,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#include <sndwave.h>
+#include <sndwave/sndwave.h>
 
 #include "utils.h"
 

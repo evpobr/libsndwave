@@ -60,7 +60,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-#include "sndwave.h"
+#include "sndwave/sndwave.h"
 #include "common.h"
 
 #define	SENSIBLE_SIZE	(0x40000000)

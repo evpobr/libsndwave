@@ -40,7 +40,7 @@
 #include <direct.h>
 #endif
 
-#include	<sndwave.h>
+#include	<sndwave/sndwave.h>
 
 #include	"utils.h"
 
