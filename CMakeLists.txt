@@ -125,14 +125,6 @@ set_package_properties(Speex PROPERTIES TYPE OPTIONAL
 	DESCRIPTION "an audio codec tuned for speech"
 	PURPOSE "Enables experemental Speex support"
 	)
-if (BUILD_SHARED_LIBS)
-	set_package_properties (PythonInterp PROPERTIES
-		TYPE REQUIRED
-		URL "www.python.org/"
-		DESCRIPTION "Python is a widely used high-level programming language."
-		PURPOSE "Required to build shared libraries"
-		)
-endif()
 
 feature_summary (WHAT ALL)
 

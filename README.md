@@ -17,7 +17,7 @@ You can grab the source code using:
 Setting up a build environment for libsndwave on Debian or Ubuntu is as simple as:
 
     sudo apt install build-essential cmake libasound2-dev libflac-dev libogg-dev \
-        libvorbis-dev libopus-dev pkg-config python
+        libvorbis-dev libopus-dev pkg-config
 
 For other Linux distributions or any of the *BSDs, the setup should be similar
 although the package install tools and package names may be slightly different.

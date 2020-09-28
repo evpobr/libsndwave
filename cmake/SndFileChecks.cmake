@@ -262,7 +262,3 @@ if (DEFINED ENABLE_STATIC_RUNTIME)
 		message(AUTHOR_WARNING "ENABLE_STATIC_RUNTIME option is for MSVC compiler only.")
 	endif ()
 endif ()
-
-if (BUILD_SHARED_LIBS)
-	find_package (PythonInterp REQUIRED)
-endif()
