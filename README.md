@@ -25,7 +25,6 @@ Similarly on Mac OS X, assuming [brew] is already installed:
 
     brew install cmake flac libogg libtool libvorbis opus pkg-config
 
-
 ## The CMake build system
 
 The build process with CMake takes place in two stages. First, standard build files
