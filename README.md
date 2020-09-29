@@ -5,6 +5,8 @@
 libsndwave is a fork of [libsndfile](https://github.com/erikd/libsndfile),
 a library for reading and writing audio files, developed by Erik de Castro Lopo.
 
+The bifurcation point with libsndfile is at this [commit](https://github.com/erikd/libsndfile/commit/fe493272d2261e1f0b547cd39bd91e44ebc580bb).
+
 The goal of this project is to speed up development and remove unnecessary and
 outdated dependencies.
 
@@ -12,7 +14,14 @@ This project is API compatible with libsndfile. The name of the library itself a
 the header file has been changed to avoid conflicts with the upstream, but all the
 names of public functions and types remained unchanged.
 
-## Hacking
+**Contents:**
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [Contributing](#contributing)
+* [Downloads](#downloads)
+
+## Installation
 
 The canonical source code repository for libsndwave is at
 [https://github.com/evpobr/libsndwave/][github].
@@ -33,7 +42,7 @@ Similarly on Mac OS X, assuming [brew] is already installed:
 
     brew install cmake flac libogg libtool libvorbis opus pkg-config
 
-## The CMake build system
+### The CMake build system
 
 The build process with CMake takes place in two stages. First, standard build files
 are created from configuration scripts. Then the platform's native build tools are
@@ -143,7 +152,7 @@ Deprecated options:
   `ENABLE_CPU_CLIP`
 * `BUILD_STATIC_LIBS` - build static library. Use `BUILD_SHARED_LIBS` instead
 
-### Linking from CMake projects
+## Usage
 
 First you need to add `FindOgg.cmake`, `FindVorbis.cmake`, `FindFLAC.cmake` and
 `FindOpus.cmake` files to some directory inside your CMake project (usually
@@ -170,15 +179,21 @@ With with option `find_package` will terminate configuration process
 
 You can also add version check:
 
-    find_package(SndWave 1.0.29)
+    find_package(SndWave 1.0.1)
 
-`find_package` will report error, if `libsndwave` version is < 1.0.29.
+`find_package` will report error, if `libsndwave` version is < 1.0.1.
 
 You can combine `REQUIRED` and version if you need.
 
 To link `libsndwave` library use:
 
     target_link_libraries(my_application PRIVATE SndWave::sndwave)
+
+Preparation is complete! How you can include header:
+
+    #include <sndwave/sndwave.h>
+
+and use libsndwave in your project.
 
 ### Notes for Windows users
 
@@ -202,9 +217,15 @@ You also need to set `VCPKG_TARGET_TRIPLET` because you use static libraries:
 
     -DVCPKG_TARGET_TRIPLET=x64-windows-static
 
-## Submitting Patches
+## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## Downloads
+
+Releases are located on [GitHub Releases page](https://github.com/evpobr/libsndwave/releases).
+
+Release tags and binary distributions are signed and can be verified by [GPG key](https://keybase.io/evpobr).
 
 [brew]: http://brew.sh/
 [github]: https://github.com/evpobr/libsndwave/

@@ -1,4 +1,8 @@
- ## Submitting Issues.
+# Contibuting
+
+Fist, read GitHub's [Collaborating with issues and pull requests](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests) atricle.
+
+## Submitting Issues
 
 * If your issue is that libsndwave is not able to or is incorrectly reading one
   of your files, please include the output of the `sndwave-info` program run
@@ -9,15 +13,11 @@
   your program is warning free, and that is is error free when run under Valgrind
   or compiled with AddressSanitizer.
 
-## Submitting Patches.
+## Submitting Patches
 
+* For commits, follow [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/) guide
 * Patches should pass all existing tests
-* Patches should pass all pre-commit hook tests.
-* Patches should always be submitted via a either Github "pull request" or a
-  via emailed patches created using "git format-patch".
+* Patches should not change existing coding style
 * Patches for new features should include tests and documentation.
 * Patches to fix bugs should either pass all tests, or modify the tests in some
-  sane way.
-* When a new feature is added for a particular file format and that feature
-  makes sense for other formats, then it should also be implemented for one
-  or two of the other formats.
+  sane way
