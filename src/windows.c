@@ -24,10 +24,9 @@
 
 #include "sfconfig.h"
 
-#if OS_IS_WIN32
+#ifdef _WIN32
 #include <windows.h>
 
-#define ENABLE_SNDFILE_WINDOWS_PROTOTYPES 1
 #include "sndwave/sndwave.h"
 #include "common.h"
 
@@ -36,7 +35,7 @@ extern int sf_errno ;
 static void copy_filename (SF_PRIVATE * psf, LPCWSTR wpath) ;
 
 SNDFILE*
-sf_wchar_open (LPCWSTR wpath, int mode, SF_INFO *sfinfo)
+sf_wchar_open (const wchar_t *wpath, int mode, SF_INFO *sfinfo)
 {	SF_PRIVATE 	*psf ;
 	char utf8name [512] ;
 

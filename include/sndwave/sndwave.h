@@ -744,16 +744,10 @@ SNDWAVE_EXPORT void sf_write_sync (SNDFILE *sndfile) ;
 /* The function sf_wchar_open() is Windows Only!
 ** Open a file passing in a Windows Unicode filename. Otherwise, this is
 ** the same as sf_open().
-**
-** In order for this to work, you need to do the following:
-**
-**		#include <windows.h>
-**		#define ENABLE_SNDFILE_WINDOWS_PROTOTYPES 1
-**		#including <sndwave/sndwave.h>
 */
 
-#if (defined (ENABLE_SNDFILE_WINDOWS_PROTOTYPES) && ENABLE_SNDFILE_WINDOWS_PROTOTYPES)
-SNDWAVE_EXPORT SNDFILE *sf_wchar_open (LPCWSTR wpath, int mode, SF_INFO *sfinfo) ;
+#ifdef _WIN32
+SNDWAVE_EXPORT SNDFILE *sf_wchar_open (const wchar_t *wpath, int mode, SF_INFO *sfinfo) ;
 #endif
 
 
