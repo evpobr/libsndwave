@@ -20,6 +20,7 @@ names of public functions and types remained unchanged.
 * [Usage](#usage)
 * [Contributing](#contributing)
 * [Downloads](#downloads)
+* [Downloads](#downloads)
 
 ## Installation
 
@@ -204,9 +205,15 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## Downloads
 
+Latest version is 1.0.0, released on 2020-09-09.
+
 Releases are located on [GitHub Releases page](https://github.com/evpobr/libsndwave/releases).
 
 Release tags and binary distributions are signed and can be verified by [GPG key](https://keybase.io/evpobr).
 
 [brew]: http://brew.sh/
 [github]: https://github.com/evpobr/libsndwave/
+
+## License
+
+[LGPL-2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html).
