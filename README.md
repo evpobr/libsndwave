@@ -136,14 +136,6 @@ You can pass additional options with `/D<parameter>=<value>` when you run
 * `INSTALL_PKGCONFIG_MODULE` - generate and install [pkg-config module](https://people.freedesktop.org/~dbn/pkg-config-guide.html).
 * `INSTALL_MANPAGES` - install [man pages](https://en.wikipedia.org/wiki/Man_page) for programs. This option is `ON` by default
   on Unix, MinGW and Cygwin platforms
-  
-Deprecated options:
-
-* `DISABLE_EXTERNAL_LIBS` - disable Ogg, Vorbis and FLAC support. Replaced by
-  `ENABLE_EXTERNAL_LIBS`
-* `DISABLE_CPU_CLIP` - disable tricky cpu specific clipper. Replaced by
-  `ENABLE_CPU_CLIP`
-* `BUILD_STATIC_LIBS` - build static library. Use `BUILD_SHARED_LIBS` instead
 
 ## Usage
 
