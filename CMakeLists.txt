@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.13..3.18)
+cmake_minimum_required (VERSION 3.15..3.18)
 
 # MSVC runtime library flags are selected by an abstraction, CMake >= 3.15
 # This policy still need to be set even with cmake_minimum_required() command above.
@@ -55,9 +55,6 @@ option (BUILD_PROGRAMS "Build programs" ON)
 option (BUILD_EXAMPLES "Build examples" ON)
 option (ENABLE_CPACK "Enable CPack support" ON)
 option (ENABLE_EXPERIMENTAL "Enable experimental code" OFF)
-if (MSVC AND (CMAKE_VERSION VERSION_LESS 3.15))
-	option (ENABLE_STATIC_RUNTIME "Enable static runtime" OFF)
-endif ()
 option (ENABLE_PACKAGE_CONFIG "Generate and install package config file" ON)
 option (INSTALL_PKGCONFIG_MODULE "Generate and install pkg-config module" ON)
 
@@ -95,10 +92,6 @@ add_feature_info (ENABLE_CPU_CLIP ENABLE_CPU_CLIP "Enable tricky cpu specific cl
 add_feature_info (ENABLE_PACKAGE_CONFIG ENABLE_PACKAGE_CONFIG "generate and install package config file")
 add_feature_info (INSTALL_PKGCONFIG_MODULE INSTALL_PKGCONFIG_MODULE "generate and install pkg-config module")
 add_feature_info (INSTALL_MANPAGES INSTALL_MANPAGES "install man pages for programs")
-
-if (MSVC AND (CMAKE_VERSION VERSION_LESS 3.15))
-	add_feature_info (ENABLE_STATIC_RUNTIME ENABLE_STATIC_RUNTIME "Enable static runtime")
-endif ()
 
 set_package_properties (Ogg PROPERTIES
 	TYPE RECOMMENDED

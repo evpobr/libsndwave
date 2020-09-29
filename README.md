@@ -56,7 +56,7 @@ Some IDE support CMake natively or with plugins, check you IDE documentation
 
 1. C99-compliant compiler toolchain (tested with GCC, Clang and Visual
    Studio 2015)
-2. CMake 3.13 or newer
+2. CMake 3.15 or newer
 
 There are some recommended packages to enable all features of libsndwave:
 
@@ -137,13 +137,6 @@ You can pass additional options with `/D<parameter>=<value>` when you run
 * `INSTALL_MANPAGES` - install [man pages](https://en.wikipedia.org/wiki/Man_page) for programs. This option is `ON` by default
   on Unix, MinGW and Cygwin platforms
   
-* `ENABLE_STATIC_RUNTIME` - enable static runtime on Windows platform, `OFF` by
-  default (CMake < 3.15).
-
-  **Note**: For MSVC compiler this option is deprecated and disabled for CMake >= 3.15, see
-  policy [CMP0091](https://cmake.org/cmake/help/latest/policy/CMP0091.html).
-  Use `CMAKE_MSVC_RUNTIME_LIBRARY` option instead.
-
 Deprecated options:
 
 * `DISABLE_EXTERNAL_LIBS` - disable Ogg, Vorbis and FLAC support. Replaced by
@@ -197,13 +190,9 @@ and use libsndwave in your project.
 
 ### Notes for Windows users
 
-First advice - set `ENABLE_STATIC_RUNTIME` to ON. This will remove dependencies
-on runtime DLLs.
-
-Second advice is about Ogg, Vorbis FLAC and Opus support. Searching external
-libraries under Windows is a little bit tricky. The best way is to use
-[Vcpkg](https://github.com/Microsoft/vcpkg). You need to install static libogg,
-libvorbis, libflac and libopus libraries:
+Searching external libraries under Windows is a little bit tricky. The best way
+is to use [Vcpkg](https://github.com/Microsoft/vcpkg). You need to install
+static libogg, libvorbis, libflac and libopus libraries:
 
     vcpkg install libogg:x64-windows-static libvorbis:x64-windows-static
     libflac:x64-windows-static opus:x64-windows-static libogg:x86-windows-static
