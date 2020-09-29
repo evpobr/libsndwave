@@ -33,6 +33,7 @@
 
 #include "sndwave_export.h"
 #include "sndwave_types.h"
+#include "sndwave_version.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -139,6 +139,7 @@ feature_summary (WHAT ALL)
 configure_file (src/config.h.cmake src/config.h)
 
 configure_file (include/sndwave/sndwave_types.h.in include/sndwave/sndwave_types.h)
+configure_file (include/sndwave/sndwave_version.h.in include/sndwave/sndwave_version.h)
 
 if (INSTALL_PKGCONFIG_MODULE)
 
@@ -167,6 +168,7 @@ set (sndwave_HDRS
 	include/sndwave/sndwave.h
 	include/sndwave/sndwave.hh
 	${CMAKE_CURRENT_BINARY_DIR}/include/sndwave/sndwave_types.h
+	${CMAKE_CURRENT_BINARY_DIR}/include/sndwave/sndwave_version.h
 	)
 
 add_library (sndwave
