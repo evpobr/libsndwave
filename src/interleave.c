@@ -25,7 +25,7 @@
 
 #define		INTERLEAVE_CHANNELS		6
 
-typedef struct
+struct INTERLEAVE_DATA_tag
 {	double	buffer [SF_BUFFER_LEN / sizeof (double)] ;
 
 	sf_count_t		channel_len ;
@@ -35,7 +35,7 @@ typedef struct
 	sf_count_t		(*read_float)	(SF_PRIVATE*, float *ptr, sf_count_t len) ;
 	sf_count_t		(*read_double)	(SF_PRIVATE*, double *ptr, sf_count_t len) ;
 
-} INTERLEAVE_DATA ;
+} ;
 
 
 
