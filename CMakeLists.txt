@@ -73,7 +73,7 @@ if (NOT ENABLE_CPU_CLIP)
 	set (CPU_CLIPS_POSITIVE FALSE)
 	set (CPU_CLIPS_NEGATIVE FALSE)
 endif ()
-cmake_dependent_option (INSTALL_MANPAGES "Install man pages for programs" ON "BUILD_PROGRAMS AND (UNIX OR MINGW OR CYGWIN)" OFF)
+cmake_dependent_option (INSTALL_MANPAGES "Install man pages for programs" ON "BUILD_PROGRAMS" OFF)
 
 set (HAVE_EXTERNAL_XIPH_LIBS ${ENABLE_EXTERNAL_LIBS})
 set (HAVE_ALSA_ASOUNDLIB_H ${ALSA_FOUND})
