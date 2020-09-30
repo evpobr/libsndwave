@@ -208,7 +208,7 @@ enum
 /*---------------------------------------------------------------------------------------
 */
 
-typedef struct
+typedef struct ALAC_DECODER_INFO_tag
 {	unsigned	kuki_offset ;
 	unsigned	pakt_offset ;
 
@@ -226,12 +226,12 @@ typedef struct
 **	endian encodings are different.
 */
 
-typedef struct
+typedef struct PEAK_POS_tag
 {	double		value ;		/* signed value of peak */
 	sf_count_t	position ;	/* the sample frame for the peak */
 } PEAK_POS ;
 
-typedef struct
+typedef struct PEAK_INFO_tag
 {	/* libsndfile internal : write a PEAK chunk at the start or end of the file? */
 	int				peak_loc ;
 
@@ -251,13 +251,13 @@ peak_info_calloc (int channels)
 {	return calloc (1, sizeof (PEAK_INFO) + channels * sizeof (PEAK_POS)) ;
 } /* peak_info_calloc */
 
-typedef struct
+typedef struct STR_DATA_tag
 {	int		type ;
 	int		flags ;
 	size_t 	offset ;
 } STR_DATA ;
 
-typedef struct
+typedef struct READ_CHUNK_tag
 {	uint64_t	hash ;
 	char		id [64] ;
 	unsigned	id_size ;
@@ -266,19 +266,19 @@ typedef struct
 	uint32_t	len ;
 } READ_CHUNK ;
 
-typedef struct
+typedef struct WRITE_CHUNK_tag
 {	uint64_t	hash ;
 	uint32_t	mark32 ;
 	uint32_t	len ;
 	void		*data ;
 } WRITE_CHUNK ;
 
-typedef struct
+typedef struct READ_CHUNKS_tag
 {	uint32_t	count ;
 	uint32_t	used ;
 	READ_CHUNK	*chunks ;
 } READ_CHUNKS ;
-typedef struct
+typedef struct WRITE_CHUNKS_tag
 {	uint32_t	count ;
 	uint32_t	used ;
 	WRITE_CHUNK	*chunks ;
@@ -332,7 +332,7 @@ typedef struct INTERLEAVE_DATA_tag INTERLEAVE_DATA ;
 **	contents.
 */
 
-typedef struct
+typedef struct PSF_FILE_tag
 {
 	union
 	{	char		c [SF_FILENAME_LEN] ;
@@ -368,7 +368,7 @@ typedef struct
 
 
 
-typedef union
+typedef union BUF_UNION_tag
 {	double			dbuf	[SF_BUFFER_LEN / sizeof (double)] ;
 #if (defined (SIZEOF_INT64_T) && (SIZEOF_INT64_T == 8))
 	int64_t			lbuf	[SF_BUFFER_LEN / sizeof (int64_t)] ;
@@ -383,7 +383,29 @@ typedef union
 	unsigned char	ucbuf	[SF_BUFFER_LEN / sizeof (signed char)] ;
 } BUF_UNION ;
 
+/* parselog and indx should only be changed within the logging functions
+** of common.c
+*/
+typedef struct sf_private_parselog_tag
+{	char			buf	[SF_PARSELOG_LEN] ;
+	int				indx ;
+} sf_private_parselog ;
 
+typedef struct sf_private_header_tag
+{	unsigned char	* ptr ;
+	sf_count_t		indx, end, len ;
+} sf_private_header ;
+
+/* Storage and housekeeping data for adding/reading strings from
+** sound files.
+*/
+typedef struct sf_private_strings_tag
+{	STR_DATA	data [SF_MAX_STRINGS] ;
+	char		*storage ;
+	size_t		storage_len ;
+	size_t		storage_used ;
+	uint32_t	flags ;
+} sf_private_strings ;
 
 typedef struct sf_private_tag
 {
@@ -391,32 +413,13 @@ typedef struct sf_private_tag
 
 	char			syserr		[SF_SYSERR_LEN] ;
 
-	/* parselog and indx should only be changed within the logging functions
-	** of common.c
-	*/
-	struct
-	{	char			buf	[SF_PARSELOG_LEN] ;
-		int				indx ;
-	} parselog ;
+	sf_private_parselog parselog ;
 
-
-	struct
-	{	unsigned char	* ptr ;
-		sf_count_t		indx, end, len ;
-	} header ;
+	sf_private_header header ;
 
 	int				rwf_endian ;	/* Header endian-ness flag. */
 
-	/* Storage and housekeeping data for adding/reading strings from
-	** sound files.
-	*/
-	struct
-	{	STR_DATA	data [SF_MAX_STRINGS] ;
-		char		*storage ;
-		size_t		storage_len ;
-		size_t		storage_used ;
-		uint32_t	flags ;
-	} strings ;
+	sf_private_strings strings ;
 
 	/* Guard value. If this changes the buffers above have overflowed. */
 	int				Magick ;
@@ -546,7 +549,7 @@ typedef struct sf_private_tag
 
 
 
-enum
+typedef enum PSF_ERROR_tag
 {	SFE_NO_ERROR				= SF_ERR_NO_ERROR,
 	SFE_BAD_OPEN_FORMAT			= SF_ERR_UNRECOGNISED_FORMAT,
 	SFE_SYSTEM					= SF_ERR_SYSTEM,
@@ -757,7 +760,7 @@ enum
 	SFE_OPUS_BAD_SAMPLERATE,
 
 	SFE_MAX_ERROR			/* This must be last in list. */
-} ;
+} PSF_ERROR ;
 
 /* Allocate and initialize the SF_PRIVATE struct. */
 SF_PRIVATE * psf_allocate (void) ;
