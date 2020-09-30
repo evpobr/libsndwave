@@ -307,13 +307,6 @@ typedef wchar_t	sfwchar_t ;
 typedef int16_t sfwchar_t ;
 #endif
 
-
-static inline void *
-psf_memdup (const void *src, size_t n)
-{	void * mem = calloc (1, n & 3 ? n + 4 - (n & 3) : n) ;
-	return memcpy (mem, src, n) ;
-} /* psf_memdup */
-
 /*
 **	This version of isprint specifically ignores any locale info. Its used for
 **	determining which characters can be printed in things like hexdumps.

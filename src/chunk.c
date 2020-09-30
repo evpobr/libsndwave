@@ -26,6 +26,12 @@
 #include	"sfendian.h"
 #include	"common.h"
 
+static inline void *
+psf_memdup (const void *src, size_t n)
+{	void * mem = calloc (1, n & 3 ? n + 4 - (n & 3) : n) ;
+	return memcpy (mem, src, n) ;
+} /* psf_memdup */
+
 static int64_t
 hash_of_str (const char * str)
 {	int64_t marker = 0 ;
