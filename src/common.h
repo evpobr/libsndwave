@@ -323,6 +323,8 @@ psf_isprint (int ch)
 {	return (ch >= ' ' && ch <= '~') ;
 } /* psf_isprint */
 
+typedef struct DITHER_DATA_tag DITHER_DATA ;
+
 /*=======================================================================================
 **	SF_PRIVATE stuct - a pointer to this struct is passed back to the caller of the
 **	sf_open_XXXX functions. The caller however has no knowledge of the struct's
@@ -474,7 +476,7 @@ typedef struct sf_private_tag
 	int				blockwidth ;	/* Size in bytes of one set of interleaved samples. */
 	int				bytewidth ;		/* Size in bytes of one sample (one channel). */
 
-	void			*dither ;
+	DITHER_DATA		*dither ;
 	void			*interleave ;
 
 	int				last_op ;		/* Last operation; either SFM_READ or SFM_WRITE */

@@ -56,7 +56,7 @@
 #define	SFE_DITHER_BAD_PTR	666
 #define	SFE_DITHER_BAD_TYPE	667
 
-typedef struct
+struct DITHER_DATA_tag
 {	int			read_short_dither_bits, read_int_dither_bits ;
 	int			write_short_dither_bits, write_int_dither_bits ;
 	double		read_float_dither_scale, read_double_dither_bits ;
@@ -73,7 +73,7 @@ typedef struct
 	sf_count_t	(*write_double)	(SF_PRIVATE *psf, const double *ptr, sf_count_t len) ;
 
 	double buffer [SF_BUFFER_LEN / sizeof (double)] ;
-} DITHER_DATA ;
+} ;
 
 static sf_count_t dither_read_short		(SF_PRIVATE *psf, short *ptr, sf_count_t len) ;
 static sf_count_t dither_read_int		(SF_PRIVATE *psf, int *ptr, sf_count_t len) ;
